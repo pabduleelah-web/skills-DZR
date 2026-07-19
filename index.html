@@ -1,69 +1,273 @@
 <!DOCTYPE html>
-<html lang="en">
-
-  <head>
+<html lang="ar" dir="rtl">
+<head>
     <meta charset="UTF-8">
-    <title>FIFA World Cup 2026 (CSS only)</title>
-    <link rel="stylesheet" href="./style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مركز كأس العالم FIFA 2026 التفاعلي</title>
+    <style>
+        /* --- أولاً: أكواد تأثير اللوجو والشعار المتحرك --- */
+        @property --scale {
+            syntax: '<number>';
+            inherits: true;
+            initial-value: .8;
+        }
+        :root {
+            --char-size: 25vmin;
+            --speed: 10s;
+            --bg-main: #0c1017;
+            --bg-card: #161f2c;
+            --bg-table-header: #111823;
+            --accent: #d4af37;
+            --text-main: #ffffff;
+            --text-muted: #8b9bb4;
+            --border-color: #243242;
+            --live-color: #ff3333;
+        }
 
-  </head>
-    
-  <body>
-  <div class="logo">
-  <div class="num num-two">
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
+        /* شاشة الترحيب الافتتاحية */
+        #intro-loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background: #1C2379;
+            z-index: 9999;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+        .logo-container {
+            --r: calc(var(--char-size) / 3);
+            --gap: calc(var(--char-size) / 15);
+            display: grid;
+            grid-template-rows: repeat(2, 1fr);
+            gap: var(--gap);
+            height: 100%;
+            width: 100%;
+            position: relative;
+        }
+        .num { display: grid; justify-content: center; }
+        .num-two { align-content: end; }
+        .num-two span { transform-origin: 50% 100%; }
+        .num-six { align-content: start; z-index: -1; }
+        .num-six span { transform-origin: 50% calc(sibling-index() * .01%); }
+        .num span {
+            grid-row: 1; grid-column: 1;
+            position: relative;
+            display: block;
+            width: calc(var(--r) * 4);
+            height: calc(var(--r) * 3);
+            container-type: size;
+            z-index: calc(sibling-count() - sibling-index());
+        }
+        .num span:not(:first-child) {
+            scale: calc((sibling-index() - 1) * var(--scale));
+            animation: scaleIt var(--speed, 0s) calc(sibling-index() * -100ms) ease-in-out infinite;
+        }
+        .num span:nth-child(10n + 1) { color: #F1FE67; }
+        .num span:nth-child(10n + 2) { color: #6B1D18; }
+        .num span:nth-child(10n + 3) { color: #C3291C; }
+        .num span:nth-child(10n + 4) { color: #AC89F7; }
+        .num span:nth-child(10n + 5) { color: #374FF5; }
+        .num span:nth-child(10n + 6) { color: #EB4F27; }
+        .num span:nth-child(10n + 7) { color: #BCE949; }
+        .num span:num span:nth-child(10n + 8) { color: #5A0DE0; }
+        .num span:nth-child(10n + 9) { color: #91FBDC; }
+        .num span:nth-child(10n + 10) { color: #1E4B3F; }
+        .num span:nth-child(1) { color: #fff; }
+        .num span:before { content: ''; position: absolute; inset: 0; background: currentcolor; }
+        .num-two span:before {
+            clip-path: shape(from 0 var(--r), arc to var(--r) 0 of var(--r) var(--r) cw, line to calc(var(--r) * 3) 0, arc to calc(var(--r) * 3) calc(var(--r) * 2) of var(--r) var(--r) cw, line to calc(var(--r) * 4) calc(var(--r) * 2), line to calc(var(--r) * 4) calc(var(--r) * 3), line to 0 calc(var(--r) * 3), line to 0 calc(var(--r) * 2), arc to var(--r) var(--r) of var(--r) var(--r) cw, close);
+        }
+        .num-six span:before {
+            clip-path: shape(from 0 var(--r), arc to var(--r) 0 of var(--r) var(--r) cw, line to calc(var(--r) * 3) 0, arc to calc(var(--r) * 4) var(--r) of var(--r) var(--r) cw, line to calc(var(--r) * 3) var(--r), arc to calc(var(--r) * 3) calc(var(--r) * 3) of var(--r) var(--r) cw, line to var(--r) calc(var(--r) * 3), arc to 0 calc(var(--r) * 2) of var(--r) var(--r) cw, close);
+        }
+        .num-six span:first-child:after {
+            content: 'TM'; position: absolute; bottom: 0; left: 100%; rotate: -90deg; transform-origin: 0 100%; font-size: 8cqb; font-family: sans-serif; text-box: trim-both cap alphabetic;
+        }
+        .logo-container img {
+            position: absolute; top: 50%; left: 50%; z-index: 99; display: block; margin: 0; height: calc(var(--char-size) * 1.55); transform: translate(-50%, -50%);
+        }
+        @keyframes scaleIt {
+            20% { --scale: 2; }
+            40% { --scale: .6; }
+            70% { --scale: 1.4; }
+        }
+
+        /* --- ثانياً: أكواد تصميم المنصة الرئيسية للموقع --- */
+        body {
+            background-color: var(--bg-main);
+            color: var(--text-main);
+            margin: 0; padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        header {
+            background: linear-gradient(rgba(12, 16, 23, 0.8), rgba(12, 16, 23, 0.95)), url('https://images.unsplash.com/photo-1508098682722-e99c43a406b2?q=80&w=1200') center/cover;
+            text-align: center; padding: 40px 20px; border-bottom: 3px solid var(--accent);
+        }
+        header h1 { font-size: 2.2rem; margin: 0 0 10px 0; color: var(--accent); }
+        header p { color: var(--text-muted); margin: 0; font-size: 1.1rem; }
+        nav {
+            background-color: var(--bg-table-header); display: flex; justify-content: center; gap: 15px; padding: 15px 0; position: sticky; top: 0; z-index: 100; border-bottom: 1px solid var(--border-color);
+        }
+        nav button {
+            background: none; border: none; color: var(--text-muted); padding: 10px 25px; font-size: 1rem; font-weight: bold; cursor: pointer; border-radius: 6px; transition: all 0.3s ease;
+        }
+        nav button.active, nav button:hover { background-color: var(--accent); color: #000000; box-shadow: 0 2px 8px rgba(212, 175, 55, 0.4); }
+        .container { max-width: 1450px; margin: 40px auto; padding: 0 20px; }
+        .page { display: none; }
+        .page.active { display: block; }
+        
+        /* تنسيق شبكة المجموعات والشجرة */
+        .groups-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(380px, 1fr)); gap: 30px; }
+        .group-card { background-color: var(--bg-card); border-radius: 10px; border: 1px solid var(--border-color); overflow: hidden; }
+        .group-header { background-color: var(--bg-table-header); padding: 15px; font-weight: bold; color: var(--accent); text-align: center; }
+        table { width: 100%; border-collapse: collapse; text-align: center; font-size: 0.9rem; }
+        th, td { padding: 12px 8px; border-bottom: 1px solid var(--border-color); }
+        th { background-color: rgba(17, 24, 35, 0.6); color: var(--text-muted); }
+        td.team-info { text-align: right; font-weight: bold; padding-right: 15px; }
+        .points-col { font-weight: bold; color: var(--accent); }
+
+        .bracket-wrapper { overflow-x: auto; padding: 20px 0; }
+        .bracket-container { display: flex; justify-content: space-between; align-items: center; min-width: 1400px; gap: 15px; direction: ltr; }
+        .bracket-column { display: flex; flex-direction: column; justify-content: space-around; height: 720px; width: 190px; }
+        .match-box { background-color: var(--bg-card); border: 1px solid var(--border-color); border-radius: 6px; padding: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.2); }
+        .match-box-title { font-size: 0.7rem; color: var(--text-muted); border-bottom: 1px solid var(--border-color); padding-bottom: 3px; margin-bottom: 6px; display: flex; justify-content: space-between; }
+        .bracket-team { display: flex; justify-content: space-between; align-items: center; padding: 4px 6px; font-weight: bold; }
+        .bracket-team.winner { color: var(--accent); }
+        .bracket-score { background-color: var(--bg-main); padding: 2px 6px; border-radius: 3px; min-width: 20px; text-align: center; }
+        .center-final { display: flex; flex-direction: column; align-items: center; gap: 25px; width: 240px; }
+        .final-box { border: 2px solid var(--accent); width: 100%; }
+        .live-pulse { background: var(--live-color); width: 6px; height: 6px; border-radius: 50%; display: inline-block; }
+    </style>
+</head>
+<body>
+
+<!-- شاشة الانترو الافتتاحية والمؤثر البصري المضاف حديثاً للموقع -->
+<div id="intro-loader">
+  <div class="logo-container">
+    <div class="num num-two">
+      <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+    </div>
+    <div class="num num-six">
+      <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+    </div>
+    <img src="https://www.donotfold.be/data/codepen/wk2026/fifa-world-cup-2026.png" alt="" />
   </div>
-  <div class="num num-six">
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-  </div>
-  <img src="https://www.donotfold.be/data/codepen/wk2026/fifa-world-cup-2026.png" alt="" />
 </div>
-    
-  </body>
-  
+
+<!-- المحتوى الأساسي للموقع -->
+<header>
+    <h1>🏆 بطولة كأس العالم FIFA 2026 🏆</h1>
+    <p>تابع ترتيب المجموعات ومخطط مواجهات الأدوار الإقصائية مباشرة بالأعلام والفرق الكاملة</p>
+</header>
+
+<nav>
+    <button id="btn-tab1" class="active" onclick="switchTab(1)">📊 ترتيب المجموعات</button>
+    <button id="btn-tab2" onclick="switchTab(2)">🌿 شجرة الأدوار الإقصائية (Bracket)</button>
+</nav>
+
+<div class="container">
+    <!-- تبويب 1: ترتيب المجموعات -->
+    <div id="tab1" class="page active">
+        <div class="groups-grid">
+            <div class="group-card">
+                <div class="group-header">المجموعة A</div>
+                <table>
+                    <thead>
+                        <tr><th style="text-align: right; padding-right:15px;">المنتخب</th><th>لعب</th><th>ف</th><th>ت</th><th>خ</th><th>له</th><th>عليه</th><th>نقاط</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td class="team-info">🇲🇽 المكسيك</td><td>3</td><td>2</td><td>1</td><td>0</td><td>5</td><td>2</td><td class="points-col">7</td></tr>
+                        <tr><td class="team-info">🇺🇸 أمريكا</td><td>3</td><td>2</td><td>0</td><td>1</td><td>6</td><td>3</td><td class="points-col">6</td></tr>
+                        <tr><td class="team-info">🇨🇦 كندا</td><td>3</td><td>1</td><td>1</td><td>1</td><td>3</td><td>4</td><td class="points-col">4</td></tr>
+                        <tr><td class="team-info">🇺🇾 أوروغواي</td><td>3</td><td>0</td><td>0</td><td>3</td><td>1</td><td>6</td><td class="points-col">0</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="group-card">
+                <div class="group-header">المجموعة B</div>
+                <table>
+                    <thead>
+                        <tr><th style="text-align: right; padding-right:15px;">المنتخب</th><th>لعب</th><th>ف</th><th>ت</th><th>خ</th><th>له</th><th>عليه</th><th>نقاط</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td class="team-info">🇦🇷 الأرجنتين</td><td>3</td><td>2</td><td>1</td><td>0</td><td>7</td><td>2</td><td class="points-col">7</td></tr>
+                        <tr><td class="team-info">🇸🇦 السعودية</td><td>3</td><td>2</td><td>0</td><td>1</td><td>4</td><td>3</td><td class="points-col">6</td></tr>
+                        <tr><td class="team-info">🇫🇷 فرنسا</td><td>3</td><td>1</td><td>1</td><td>1</td><td>5</td><td>4</td><td class="points-col">4</td></tr>
+                        <tr><td class="team-info">🇦🇺 أستراليا</td><td>3</td><td>0</td><td>0</td><td>3</td><td>0</td><td>7</td><td class="points-col">0</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- تبويب 2: شجرة الأدوار الإقصائية (Knockout Bracket) -->
+    <div id="tab2" class="page">
+        <div class="bracket-wrapper">
+            <div class="bracket-container">
+                <!-- دور الـ 32 (اليسار) -->
+                <div class="bracket-column">
+                    <div class="match-box">
+                        <div class="match-box-title"><span>M74</span><span>Full time</span></div>
+                        <div class="bracket-team"><span>🇩🇪 GER</span><span class="bracket-score">1</span></div>
+                        <div class="bracket-team winner"><span>🇵🇾 PAR</span><span class="bracket-score">1 (4)</span></div>
+                    </div>
+                    <div class="match-box">
+                        <div class="match-box-title"><span>M77</span><span>Full time</span></div>
+                        <div class="bracket-team winner"><span>🇫🇷 FRA</span><span class="bracket-score">3</span></div>
+                        <div class="bracket-team"><span>🇸🇪 SWE</span><span class="bracket-score">0</span></div>
+                    </div>
+                </div>
+                <!-- دور الـ 16 (اليسار) -->
+                <div class="bracket-column">
+                    <div class="match-box">
+                        <div class="match-box-title"><span>M89</span><span>Full time</span></div>
+                        <div class="bracket-team"><span>🇵🇾 PAR</span><span class="bracket-score">0</span></div>
+                        <div class="bracket-team winner"><span>🇫🇷 FRA</span><span class="bracket-score">1</span></div>
+                    </div>
+                </div>
+                <!-- ربع النهائي والنهائي المكتمل بالنظام السابق... -->
+                <div class="center-final">
+                    <div class="match-box final-box">
+                        <div class="match-box-title" style="color: var(--accent);"><span>النهائي M104</span><span>Live <span class="live-pulse"></span></span></div>
+                        <div class="bracket-team winner"><span>🇪🇸 ESP</span><span class="bracket-score">0</span></div>
+                        <div class="bracket-team"><span>🇦🇷 ARG</span><span class="bracket-score">0</span></div>
+                    </div>
+                </div>
+                <!-- دور الـ 32 (اليمين) -->
+                <div class="bracket-column">
+                    <div class="match-box">
+                        <div class="match-box-title"><span>M76</span><span>Full time</span></div>
+                        <div class="bracket-team winner"><span>🇧🇷 BRA</span><span class="bracket-score">2</span></div>
+                        <div class="bracket-team"><span>🇯🇵 JPN</span><span class="bracket-score">1</span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // إخفاء شاشة الانترو المتحركة تلقائياً بعد 3.5 ثوانٍ من فتح الموقع
+    window.addEventListener('DOMContentLoaded', () => {
+        setTimeout(() => {
+            const loader = document.getElementById('intro-loader');
+            loader.style.opacity = '0';
+            setTimeout(() => {
+                loader.style.display = 'none';
+            }, 800);
+        }, 3500); 
+    });
+
+    function switchTab(tabNum) {
+        document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+        document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
+        document.getElementById(`tab${tabNum}`).classList.add('active');
+        document.getElementById(`btn-tab${tabNum}`).classList.add('active');
+    }
+</script>
+</body>
 </html>
