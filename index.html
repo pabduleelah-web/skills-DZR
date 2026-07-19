@@ -1,19 +1,101 @@
-<!DOCTYPE html>
-<html dir="ltr" lang="en">
-  <head>
-    <title>Football Standings Widget</title>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0" />    
-    <style>
-      * {
-        margin: 0;
-        padding: 0;
-      }
-    </style>
-  </head>
-  <body>
-    <gm-football-standings competition="SA" season="2020" public-key="ffd61d87e73740c29dd389ea7619d5e1"></gm-football-standings>
+// wc2026-widget.js
+(function () {
+  const MOUNT_ID = 'wc2026-widget';
+  const API = 'https://api.thestatsapi.com/api/football/matches';
+  const COMPETITION_ID = 'YOUR_COMPETITION_ID'; // look up via GET /football/competitions?search=world%20cup
+  const POLL_MS = 30000;
 
-    <script type="module" src="https://unpkg.com/gm-football-standings/dist/gm-football-standings/gm-football-standings.esm.js"></script>
-  </body>
-</html>
+  const mount = document.getElementById(MOUNT_ID);
+  if (!mount) return;
+
+  // Inject minimal scoped styles
+  injectStyles();
+
+  // Render initial loading state
+  mount.innerHTML = `<div class="wc-widget wc-loading">Loading World Cup matches...</div>`;
+
+  // Initial fetch + interval
+  refresh();
+  setInterval(refresh, POLL_MS);
+
+  async function refresh() {
+    try {
+      const today = new Date().toISOString().slice(0, 10);
+      const url = `${API}?competition_id=${COMPETITION_ID}&date=${today}`;
+      const r = await fetch(url);
+      if (!r.ok) throw new Error('API error');
+      const { data } = await r.json();
+      render(data);
+    } catch (err) {
+      mount.innerHTML = `<div class="wc-widget wc-error">Couldn't load matches</div>`;
+    }
+  }
+
+  function render(matches) {
+    if (!matches.length) {
+      mount.innerHTML = `<div class="wc-widget wc-empty">No World Cup matches today</div>`;
+      return;
+    }
+
+    mount.innerHTML = `
+      <div class="wc-widget">
+        <div class="wc-header">FIFA World Cup 2026 — Today's Matches</div>
+        <ul class="wc-list">
+          ${matches.map(matchRow).join('')}
+        </ul>
+        <a class="wc-attr" href="https://www.thestatsapi.com/world-cup" target="_blank" rel="noopener">
+          Powered by TheStatsAPI
+        </a>
+      </div>
+    `;
+  }
+
+  function matchRow(m) {
+    const status = m.status === 'live'
+      ? `<span class="wc-live">LIVE</span>`
+      : m.status === 'finished'
+      ? `<span class="wc-final">FT</span>`
+      : `<span class="wc-time">${formatKickoff(m.utc_date)}</span>`;
+
+    const score = (m.status === 'live' || m.status === 'finished')
+      ? `<span class="wc-score">${m.score?.home ?? '-'} - ${m.score?.away ?? '-'}</span>`
+      : '<span class="wc-vs">vs</span>';
+
+    return `
+      <li class="wc-match">
+        <span class="wc-team wc-home">${m.home_team.name}</span>
+        ${score}
+        <span class="wc-team wc-away">${m.away_team.name}</span>
+        ${status}
+      </li>
+    `;
+  }
+
+  function formatKickoff(iso) {
+    const d = new Date(iso);
+    return d.toLocaleTimeString(undefined, { hour: '2-digit', minute: '2-digit' });
+  }
+
+  function injectStyles() {
+    if (document.getElementById('wc-widget-styles')) return;
+    const style = document.createElement('style');
+    style.id = 'wc-widget-styles';
+    style.textContent = `
+      .wc-widget { font-family: system-ui, sans-serif; border: 1px solid #e5e7eb; border-radius: 8px; padding: 12px; max-width: 380px; background: #fff; }
+      .wc-header { font-weight: 700; font-size: 14px; margin-bottom: 8px; color: #111827; }
+      .wc-list { list-style: none; padding: 0; margin: 0; }
+      .wc-match { display: grid; grid-template-columns: 1fr auto 1fr 60px; gap: 8px; align-items: center; padding: 8px 0; border-top: 1px solid #f3f4f6; font-size: 13px; }
+      .wc-team { color: #111827; }
+      .wc-home { text-align: right; }
+      .wc-away { text-align: left; }
+      .wc-score { font-weight: 700; color: #111827; }
+      .wc-vs { color: #9ca3af; font-size: 11px; }
+      .wc-live { color: #dc2626; font-weight: 700; font-size: 11px; text-align: right; }
+      .wc-final { color: #6b7280; font-weight: 700; font-size: 11px; text-align: right; }
+      .wc-time { color: #6b7280; font-size: 11px; text-align: right; }
+      .wc-attr { display: block; margin-top: 8px; font-size: 10px; color: #9ca3af; text-align: center; text-decoration: none; }
+      .wc-attr:hover { color: #6b7280; }
+    `;
+    document.head.appendChild(style);
+  }
+})();
