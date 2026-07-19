@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>فعالية تحدي المهارات المتكاملة</title>
+    <title>فعاليات DZR</title>
     <style>
         :root {
             --bg-color: #f4f6f9;
@@ -127,15 +127,15 @@
 <body>
 
 <header>
-    <h1>🎯 مدونة فعالية "تحدي المهارات المتكاملة"</h1>
-    <p>مساحة تفاعلية مخصصة لأعضاء المجموعة لمشاركة المهارات والإبداع والتقييم البنّاء.</p>
+    <h1>🎯 منصة فعاليات DZR التفاعلية</h1>
+    <p>مساحة رقمية مخصصة لأعضاء المجموعة للمشاركة والتفاعل وتبادل الأفكار والخبرات فوراً.</p>
 </header>
 
 <div class="container">
     <!-- العمود الأول -->
     <div class="column" id="col1">
-        <h2>📝 مهارة الإيجاز والتحرير</h2>
-        <div class="instructions">اكتب في 3 أسطر: كتاباً أثر في مسيرتك، أو تجربة إدارية خرجت منها بدرس ثمين.</div>
+        <h2>📝 الإيجاز والتحرير المهني</h2>
+        <div class="instructions">شاركنا تجربة إدارية مميزة أو فكرة اختصرتها في أسطر معدودة لتفيد بها زملائك.</div>
         <div class="form-group"><input type="text" placeholder="الاسم الثنائي" id="name1"></div>
         <div class="form-group"><textarea placeholder="اكتب مشاركتك هنا..." id="text1"></textarea></div>
         <button onclick="addPost(1)">نشر المشاركة</button>
@@ -144,29 +144,29 @@
 
     <!-- العمود الثاني -->
     <div class="column" id="col2">
-        <h2>💡 مهارة حل المشكلات</h2>
-        <div class="instructions">كيف نحافظ على إنتاجية عالية وعلاقات ممتازة بالفريق دون ضغوط؟ ضع حلاً في نقطتين.</div>
+        <h2>💡 مبادرات وحلول تطويرية</h2>
+        <div class="instructions">اطرح هنا فكرة أو مقترحاً تراه يساهم في تطوير وتسهيل بيئة العمل اليومية ومخرجاتها.</div>
         <div class="form-group"><input type="text" placeholder="الاسم الثنائي" id="name2"></div>
-        <div class="form-group"><textarea placeholder="اكتب الحل المقترح هنا..." id="text2"></textarea></div>
-        <button onclick="addPost(2)">نشر المشاركة</button>
+        <div class="form-group"><textarea placeholder="اكتب المقترح أو المبادرة هنا..." id="text2"></textarea></div>
+        <button onclick="addPost(2)">نشر المبادرة</button>
         <div class="posts-list" id="posts2"></div>
     </div>
 
     <!-- العمود الثالث -->
     <div class="column" id="col3">
-        <h2>📸 مهارة توثيق الأفكار (رابط صورة)</h2>
-        <div class="instructions">ضع رابط صورة من تصويرك الخاص (مكتبك، بيئتك) تعبر عن الإنتاجية مع عنوان ملهم.</div>
+        <h2>📸 التوثيق والمحتوى البصري</h2>
+        <div class="instructions">شارك زملائك رابطاً لصورة من زاوية عملك، مكتبك، أو لقطة ملهمة تعبر عن الإنتاجية اليومية.</div>
         <div class="form-group"><input type="text" placeholder="الاسم الثنائي" id="name3"></div>
-        <div class="form-group"><input type="text" placeholder="عنوان الصورة" id="title3"></div>
-        <div class="form-group"><input type="text" placeholder="رابط الصورة (URL)" id="text3"></div>
-        <button onclick="addPost(3)">نشر المشاركة</button>
+        <div class="form-group"><input type="text" placeholder="عنوان أو وصف اللقطة" id="title3"></div>
+        <div class="form-group"><input type="text" placeholder="ضع رابط الصورة هنا (URL)" id="text3"></div>
+        <button onclick="addPost(3)">نشر الرابط البصري</button>
         <div class="posts-list" id="posts3"></div>
     </div>
 
     <!-- العمود الرابع -->
     <div class="column" id="col4">
-        <h2>🤝 مهارة التقييم والتواصل</h2>
-        <div class="instructions">تصفح مشاركات زملائك، وضَع تعليقاً نقدياً بنّاءً يضيف قيمة حقيقية لأي مشاركة.</div>
+        <h2>🤝 الحوار والنقد الإيجابي البنّاء</h2>
+        <div class="instructions">اطلع على مشاركات الأعضاء في الأعمدة الأخرى، واكتب تعليقاً يضيف قيمة حقيقية لأي مشاركة نالت إعجابك.</div>
         <div class="form-group"><input type="text" placeholder="الاسم الثنائي" id="name4"></div>
         <div class="form-group"><textarea placeholder="اكتب تعليقك البنّاء هنا..." id="text4"></textarea></div>
         <button onclick="addPost(4)">نشر التعليق</button>
@@ -175,8 +175,7 @@
 </div>
 
 <script>
-    // الحفظ المؤقت للمشاركات في المتصفح المحلي لضمان بقائها عند التحديث
-    let storageKey = 'skills_event_posts_2026';
+    let storageKey = 'dzr_events_posts_2026';
     let data = JSON.parse(localStorage.getItem(storageKey)) || { 1: [], 2: [], 3: [], 4: [] };
 
     function renderPosts() {
@@ -226,7 +225,6 @@
         data[colId].unshift(newPost);
         localStorage.setItem(storageKey, JSON.stringify(data));
         
-        // تفريغ الحقول بعد النشر
         textInput.value = '';
         if (titleInput) titleInput.value = '';
         
@@ -239,7 +237,6 @@
         renderPosts();
     }
 
-    // التحميل الأولي للمشاركات
     renderPosts();
 </script>
 
