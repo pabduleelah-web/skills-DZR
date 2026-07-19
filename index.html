@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>فعاليات DZR - لمتنا</title>
+    <title>فعاليات DZR التفاعلية</title>
     <style>
         :root {
             --primary: #2c3e50;
-            --accent: #c39b62; /* لون ذهبي دافئ شبيه بمواقع المناسبات */
+            --accent: #c39b62;
             --bg: #f8f9fa;
             --card-bg: #ffffff;
             --text: #333333;
@@ -19,31 +19,22 @@
             margin: 0;
             padding: 0;
         }
-        /* الهيدر أو غلاف الفعالية */
         header {
             background: linear-gradient(rgba(44, 62, 80, 0.85), rgba(44, 62, 80, 0.95)), url('https://images.unsplash.com/photo-1511795409834-ef04bbd61622?q=80&w=1200') center/cover;
             color: white;
             text-align: center;
             padding: 60px 20px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
         }
         header h1 {
             font-size: 2.5rem;
             margin-bottom: 10px;
             color: var(--accent);
         }
-        header p {
-            font-size: 1.1rem;
-            max-width: 600px;
-            margin: 0 auto;
-            opacity: 0.9;
-        }
         .main-container {
             max-width: 1100px;
             margin: -30px auto 40px auto;
             padding: 0 20px;
         }
-        /* الكروت والبطاقات */
         .card {
             background-color: var(--card-bg);
             border-radius: 12px;
@@ -58,7 +49,24 @@
             margin-top: 0;
             font-size: 1.4rem;
         }
-        /* نموذج تأكيد الحضور RSVP */
+        /* إطار اللعبة التفاعلية */
+        .game-container {
+            position: relative;
+            padding-bottom: 56.25%;
+            height: 0;
+            overflow: hidden;
+            max-width: 100%;
+            border-radius: 8px;
+            border: 2px solid #ddd;
+        }
+        .game-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
         .rsvp-form {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -74,14 +82,12 @@
         .form-group label {
             margin-bottom: 5px;
             font-weight: 600;
-            font-size: 0.9rem;
         }
         .form-group input, .form-group select, .form-group textarea {
             padding: 12px;
             border: 1px solid #ddd;
             border-radius: 6px;
             font-family: inherit;
-            font-size: 1rem;
         }
         .btn-submit {
             background-color: var(--accent);
@@ -91,34 +97,8 @@
             border-radius: 6px;
             cursor: pointer;
             font-weight: bold;
-            font-size: 1rem;
-            transition: background 0.2s;
             grid-column: 1 / -1;
         }
-        .btn-submit:hover {
-            background-color: #aa834f;
-        }
-        /* الجدول الزمني للفعالية */
-        .timeline {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-            margin-top: 15px;
-        }
-        .timeline-item {
-            display: flex;
-            background: #fdfdfd;
-            border-right: 4px solid var(--accent);
-            padding: 12px 15px;
-            border-radius: 4px;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .timeline-time {
-            font-weight: bold;
-            color: var(--accent);
-        }
-        /* الحائط التفاعلي والمشاركات */
         .wall-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -130,40 +110,11 @@
             border: 1px solid #eaeaea;
             border-radius: 8px;
             padding: 15px;
-            position: relative;
         }
         .wall-name {
             font-weight: bold;
             color: var(--primary);
-            margin-bottom: 5px;
-            font-size: 0.95rem;
         }
-        .wall-text {
-            font-size: 0.9rem;
-            white-space: pre-line;
-            margin-bottom: 10px;
-        }
-        .wall-img {
-            width: 100%;
-            border-radius: 6px;
-            margin-top: 8px;
-            max-height: 200px;
-            object-fit: cover;
-        }
-        .wall-footer {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-size: 0.8rem;
-            color: #777;
-            margin-top: 10px;
-        }
-        .like-btn {
-            cursor: pointer;
-            color: #e74c3c;
-            font-weight: bold;
-        }
-        /* لوحة التحكم والإحصائيات */
         .stats-box {
             display: flex;
             gap: 20px;
@@ -179,74 +130,57 @@
         .stat-num {
             font-size: 1.5rem;
             font-weight: bold;
-            color: var(--primary);
         }
     </style>
 </head>
 <body>
 
 <header>
-    <h1>✨ فعاليات DZR ✨</h1>
-    <p>مرحباً بكم في منصتنا التفاعلية لإدارة الفعاليات وتأكيد الحضور ومشاركة اللحظات الجميلة.</p>
+    <h1>✨ فعاليات DZR التفاعلية ✨</h1>
+    <p>مساحة تجمع بين تحديات المهارات، الأنشطة الحية، وتأكيد حضور الأعضاء.</p>
 </header>
 
 <div class="main-container">
 
-    <!-- كرت تفاصيل الفعالية والجدول الزمني -->
+    <!-- كرت اللعبة التفاعلية من Wordwall -->
     <div class="card">
-        <h2>📅 تفاصيل وجدول الفعالية</h2>
-        <p><strong>الموقع:</strong> قاعة الاحتفالات الرئيسية وعبر المنصة الرقمية</p>
-        <div class="timeline">
-            <div class="timeline-item">
-                <span>استقبال الأعضاء والترحيب بالـ 95 مشاركاً</span>
-                <span class="timeline-time">04:00 م</span>
-            </div>
-            <div class="timeline-item">
-                <span>انطلاق الجلسة الافتتاحية والمبادرات</span>
-                <span class="timeline-time">04:30 م</span>
-            </div>
-            <div class="timeline-item">
-                <span>بدء الأنشطة التفاعلية ومشاركة المحتوى البصري</span>
-                <span class="timeline-time">06:00 م</span>
-            </div>
+        <h2>🎯 تحدي المهارات الحي (عجلة الحظ العشوائية)</h2>
+        <p style="font-size: 0.9rem; color: #666; margin-bottom: 15px;">اضغط على زر البدء لتدوير العجلة واختيار التحدي أو المهارة المطلوبة بشكل عشوائي!</p>
+        <div class="game-container">
+            <!-- يمكنك استبدال هذا الرابط برابط لعبتك الخاصة من Wordwall لاحقاً -->
+            <iframe src="https://wordwall.net/play/628/228/854?embed" allowfullscreen></iframe>
         </div>
     </div>
 
     <!-- كرت تأكيد الحضور RSVP -->
     <div class="card">
-        <h2>✍️ تأكيد الحضور (RSVP)</h2>
+        <h2>✍️ تأكيد الحضور ومشاركة فكرة</h2>
         <div class="rsvp-form">
             <div class="form-group">
                 <label>الاسم الثنائي *</label>
                 <input type="text" id="rsvpName" placeholder="أدخل اسمك الكريم">
             </div>
             <div class="form-group">
-                <label>هل ستحضر؟ *</label>
+                <label>الحالة *</label>
                 <select id="rsvpStatus">
                     <option value="نعم، بكل سرور">نعم، بكل سرور 😍</option>
                     <option value="أعتذر، لظروف خاصة">أعتذر، لظروف خاصة ✋</option>
                 </select>
             </div>
             <div class="form-group" style="grid-column: 1 / -1;">
-                <label>رسالة أو تبريكات للمجموعة (اختياري)</label>
-                <textarea id="rsvpNote" placeholder="اكتب كلمة طيبة أو تبريكات لزملائك..."></textarea>
+                <label>إضافة مهارة أو تجربة تود مشاركتها (اختياري)</label>
+                <textarea id="rsvpNote" placeholder="اكتب مشاركتك هنا..."></textarea>
             </div>
-            <div class="form-group" style="grid-column: 1 / -1;">
-                <label>رابط صورة تشاركها معنا (اختياري)</label>
-                <input type="text" id="rsvpImg" placeholder="ضع رابط الصورة هنا إذا كنت ترغب بمشاركتها">
-            </div>
-            <button class="btn-submit" onclick="submitRSVP()">تأكيد وإرسال للمنصة</button>
+            <button class="btn-submit" onclick="submitRSVP()">تأكيد الحضور والنشر</button>
         </div>
     </div>
 
-    <!-- كرت حائط لمتنا التفاعلي (لوحة التفاعل) -->
+    <!-- حائط المشاركات التفاعلي -->
     <div class="card">
-        <h2>💬 حائط تفاعلي (أصداء الفعالية)</h2>
-        
-        <!-- إحصائيات سريعة للحضور -->
+        <h2>💬 أصداء فعاليات DZR</h2>
         <div class="stats-box">
             <div class="stat-card">
-                <div>إجمالي المسجلين</div>
+                <div>إجمالي المشاركين</div>
                 <div class="stat-num" id="totalCount">0</div>
             </div>
             <div class="stat-card">
@@ -254,42 +188,31 @@
                 <div class="stat-num" id="attendingCount" style="color: #16a085;">0</div>
             </div>
         </div>
-
-        <div class="wall-grid" id="wallGrid">
-            <!-- المشاركات تظهر هنا ديناميكياً -->
-        </div>
+        <div class="wall-grid" id="wallGrid"></div>
     </div>
 
 </div>
 
 <script>
-    const storageKey = 'dzr_lamatnaa_events_2026';
+    const storageKey = 'dzr_wordwall_event_2026';
     let guests = JSON.parse(localStorage.getItem(storageKey)) || [];
 
     function renderWall() {
         const grid = document.getElementById('wallGrid');
         grid.innerHTML = '';
-        
         let attending = 0;
         
         guests.forEach((guest, index) => {
             if(guest.status.includes('نعم')) attending++;
-            
             const item = document.createElement('div');
             item.className = 'wall-item';
-            
-            let imgHTML = guest.img ? `<img src="${guest.img}" class="wall-img" onerror="this.style.display='none'">` : '';
-            let noteHTML = guest.note ? `<div class="wall-text">${guest.note}</div>` : '<div class="wall-text" style="color:#999; font-style:italic;">أكد الحضور بنجاح</div>';
+            let noteHTML = guest.note ? `<div style="margin-top:8px; font-size:0.9rem;">${guest.note}</div>` : '';
             
             item.innerHTML = `
                 <div class="wall-name">${guest.name}</div>
-                <div style="font-size:0.8rem; margin-bottom:10px; color: #16a085; font-weight:600;">الحالة: ${guest.status}</div>
+                <div style="font-size:0.8rem; color: #16a085; font-weight:600;">الحالة: ${guest.status}</div>
                 ${noteHTML}
-                ${imgHTML}
-                <div class="wall-footer">
-                    <span class="like-btn" onclick="likeGuest(${index})">❤️ ${guest.likes || 0}</span>
-                    <span>${guest.time}</span>
-                </div>
+                <div style="font-size:0.75rem; color:#888; margin-top:10px; text-align:left;">${guest.time}</div>
             `;
             grid.appendChild(item);
         });
@@ -302,10 +225,9 @@
         const nameInput = document.getElementById('rsvpName');
         const statusInput = document.getElementById('rsvpStatus');
         const noteInput = document.getElementById('rsvpNote');
-        const imgInput = document.getElementById('rsvpImg');
 
         if (!nameInput.value.trim()) {
-            alert('فضلاً أدخل الاسم الثنائي لتأكيد التسجيل.');
+            alert('فضلاً أدخل الاسم الثنائي.');
             return;
         }
 
@@ -316,30 +238,19 @@
             name: nameInput.value.trim(),
             status: statusInput.value,
             note: noteInput.value.trim(),
-            img: imgInput.value.trim(),
-            likes: 0,
             time: timeString
         };
 
         guests.unshift(newGuest);
         localStorage.setItem(storageKey, JSON.stringify(guests));
 
-        // تصفير الحقول بعد الإرسال موفقاً
         nameInput.value = '';
         noteInput.value = '';
-        imgInput.value = '';
 
         renderWall();
-        alert('تم تسجيل تأكيدك بنجاح وظهوره على الحائط التفاعلي!');
+        alert('تم التسجيل بنجاح!');
     }
 
-    function likeGuest(index) {
-        guests[index].likes = (guests[index].likes || 0) + 1;
-        localStorage.setItem(storageKey, JSON.stringify(guests));
-        renderWall();
-    }
-
-    // التشغيل الأولي عند فتح الصفحة
     renderWall();
 </script>
 
