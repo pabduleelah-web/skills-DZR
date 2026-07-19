@@ -3,14 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>فعاليات DZR التفاعلية</title>
+    <title>منصة أخبار كأس العالم 2026</title>
     <style>
         :root {
-            --primary: #2c3e50;
-            --accent: #c39b62;
-            --bg: #f8f9fa;
-            --card-bg: #ffffff;
-            --text: #333333;
+            --primary: #111111;
+            --accent: #d4af37; /* لون ذهبي يرمز لكأس العالم */
+            --bg: #1a1a1a;
+            --card-bg: #262626;
+            --text: #ffffff;
+            --text-secondary: #aaaaaa;
         }
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -19,61 +20,118 @@
             margin: 0;
             padding: 0;
         }
+        /* الهيدر */
         header {
-            background: linear-gradient(rgba(44, 62, 80, 0.85), rgba(44, 62, 80, 0.95)), url('https://images.unsplash.com/photo-1511795409834-ef04bbd61622?q=80&w=1200') center/cover;
+            background: linear-gradient(rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0.9)), url('https://images.unsplash.com/photo-1508098682722-e99c43a406b2?q=80&w=1200') center/cover;
             color: white;
             text-align: center;
-            padding: 60px 20px;
+            padding: 40px 20px;
+            border-bottom: 3px solid var(--accent);
         }
         header h1 {
-            font-size: 2.5rem;
-            margin-bottom: 10px;
+            font-size: 2.2rem;
+            margin: 0 0 10px 0;
             color: var(--accent);
+            letter-spacing: 1px;
+        }
+        header p {
+            color: var(--text-secondary);
+            margin: 0;
+        }
+        /* شريط التنقل */
+        nav {
+            background-color: var(--primary);
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            padding: 12px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+        }
+        nav button {
+            background: none;
+            border: none;
+            color: #888888;
+            padding: 10px 20px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+        }
+        nav button.active, nav button:hover {
+            background-color: var(--accent);
+            color: #000000;
         }
         .main-container {
             max-width: 1100px;
-            margin: -30px auto 40px auto;
+            margin: 30px auto;
             padding: 0 20px;
         }
+        /* الكروت */
         .card {
             background-color: var(--card-bg);
-            border-radius: 12px;
+            border-radius: 8px;
             padding: 25px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
             margin-bottom: 25px;
+            border: 1px solid #333;
         }
         .card h2 {
-            color: var(--primary);
-            border-bottom: 2px solid var(--accent);
-            padding-bottom: 8px;
+            color: var(--accent);
+            border-bottom: 2px solid #333;
+            padding-bottom: 10px;
             margin-top: 0;
             font-size: 1.4rem;
         }
-        /* إطار اللعبة التفاعلية */
-        .game-container {
-            position: relative;
-            padding-bottom: 56.25%;
-            height: 0;
+        .page {
+            display: none;
+        }
+        .page.active {
+            display: block;
+        }
+        /* الأخبار والصور المرفوعة */
+        .grid-layout {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 15px;
+        }
+        .news-item {
+            background: #1f1f1f;
+            border-radius: 6px;
             overflow: hidden;
-            max-width: 100%;
-            border-radius: 8px;
-            border: 2px solid #ddd;
+            border: 1px solid #333;
         }
-        .game-container iframe {
-            position: absolute;
-            top: 0;
-            left: 0;
+        .news-img {
             width: 100%;
-            height: 100%;
-            border: 0;
+            height: 200px;
+            object-fit: cover;
+            background-color: #333;
         }
-        .rsvp-form {
+        .news-body {
+            padding: 15px;
+        }
+        .news-title {
+            font-weight: bold;
+            font-size: 1.1rem;
+            color: var(--text);
+            margin-bottom: 8px;
+        }
+        .news-desc {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+        /* النماذج */
+        .form-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 15px;
         }
         @media (max-width: 768px) {
-            .rsvp-form { grid-template-columns: 1fr; }
+            .form-grid { grid-template-columns: 1fr; }
         }
         .form-group {
             display: flex;
@@ -82,176 +140,240 @@
         .form-group label {
             margin-bottom: 5px;
             font-weight: 600;
+            font-size: 0.9rem;
+            color: var(--accent);
         }
         .form-group input, .form-group select, .form-group textarea {
             padding: 12px;
-            border: 1px solid #ddd;
-            border-radius: 6px;
+            border: 1px solid #444;
+            border-radius: 4px;
+            background-color: #1f1f1f;
+            color: #fff;
             font-family: inherit;
         }
-        .btn-submit {
+        .btn-action {
             background-color: var(--accent);
-            color: white;
+            color: #000;
             border: none;
             padding: 12px 20px;
-            border-radius: 6px;
+            border-radius: 4px;
             cursor: pointer;
             font-weight: bold;
             grid-column: 1 / -1;
+            font-size: 1rem;
         }
-        .wall-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 15px;
-            margin-top: 20px;
+        .btn-action:hover {
+            background-color: #bfa030;
         }
-        .wall-item {
-            background: #fafbfc;
-            border: 1px solid #eaeaea;
-            border-radius: 8px;
+        /* الترشيحات والحائط */
+        .vote-card {
+            background: #1f1f1f;
+            border-left: 4px solid var(--accent);
             padding: 15px;
+            border-radius: 4px;
+            margin-bottom: 12px;
         }
-        .wall-name {
+        .vote-user {
             font-weight: bold;
-            color: var(--primary);
-        }
-        .stats-box {
-            display: flex;
-            gap: 20px;
-            margin-bottom: 15px;
-        }
-        .stat-card {
-            background: #f0f4f8;
-            padding: 15px;
-            border-radius: 6px;
-            text-align: center;
-            flex: 1;
-        }
-        .stat-num {
-            font-size: 1.5rem;
-            font-weight: bold;
+            color: var(--accent);
         }
     </style>
 </head>
 <body>
 
 <header>
-    <h1>✨ فعاليات DZR التفاعلية ✨</h1>
-    <p>مساحة تجمع بين تحديات المهارات، الأنشطة الحية، وتأكيد حضور الأعضاء.</p>
+    <h1>🏆 كأس العالم FIFA 2026 🏆</h1>
+    <p>التغطية التفاعلية للأعضاء: ترشيحات اليوم، الأخبار، وألبوم الصور المشترك.</p>
 </header>
+
+<nav>
+    <button id="btn-p1" class="active" onclick="switchPage(1)">📰 أخبار المونديال</button>
+    <button id="btn-p2" onclick="switchPage(2)">📸 أخبار الصور</button>
+    <button id="btn-p3" onclick="switchPage(3)">🗳️ ترشيح فائز اليوم</button>
+</nav>
 
 <div class="main-container">
 
-    <!-- كرت اللعبة التفاعلية من Wordwall -->
-    <div class="card">
-        <h2>🎯 تحدي المهارات الحي (عجلة الحظ العشوائية)</h2>
-        <p style="font-size: 0.9rem; color: #666; margin-bottom: 15px;">اضغط على زر البدء لتدوير العجلة واختيار التحدي أو المهارة المطلوبة بشكل عشوائي!</p>
-        <div class="game-container">
-            <!-- يمكنك استبدال هذا الرابط برابط لعبتك الخاصة من Wordwall لاحقاً -->
-            <iframe src="https://wordwall.net/play/628/228/854?embed" allowfullscreen></iframe>
+    <!-- الصفحة الأولى: أخبار المونديال الثابتة والمضافة -->
+    <div id="p1" class="page active">
+        <div class="card">
+            <h2>📰 آخر مستجدات البطولة</h2>
+            <div class="grid-layout" id="newsGrid">
+                <!-- خبر افتراضي -->
+                <div class="news-item">
+                    <div class="news-body">
+                        <div class="news-title">انطلاق الأدوار الإقصائية الحاسمة</div>
+                        <p class="news-desc">المنتخبات المتأهلة تبدأ استعداداتها المكثفة لخوض مواجهات خروج المغلوب وسط ترقب جماهيري عالمي كبير لقائمة المواجهات القادمة.</p>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
-    <!-- كرت تأكيد الحضور RSVP -->
-    <div class="card">
-        <h2>✍️ تأكيد الحضور ومشاركة فكرة</h2>
-        <div class="rsvp-form">
-            <div class="form-group">
-                <label>الاسم الثنائي *</label>
-                <input type="text" id="rsvpName" placeholder="أدخل اسمك الكريم">
+    <!-- الصفحة الثانية: أخبار الصور (رفع ومشاركة لقطات المونديال) -->
+    <div id="p2" class="page">
+        <div class="card">
+            <h2>إضافة لقطة أو صورة جديدة</h2>
+            <div class="form-grid">
+                <div class="form-group">
+                    <label>عنوان أو وصف الصورة</label>
+                    <input type="text" id="imgTitle" placeholder="مثال: تصدي حارس المرمى الأسطوري">
+                </div>
+                <div class="form-group">
+                    <label>رابط الصورة (URL)</label>
+                    <input type="text" id="imgUrl" placeholder="ضع رابط الصورة المباشر هنا">
+                </div>
+                <button class="btn-action" onclick="addImagePost()">نشر في ألبوم الصور</button>
             </div>
-            <div class="form-group">
-                <label>الحالة *</label>
-                <select id="rsvpStatus">
-                    <option value="نعم، بكل سرور">نعم، بكل سرور 😍</option>
-                    <option value="أعتذر، لظروف خاصة">أعتذر، لظروف خاصة ✋</option>
-                </select>
+        </div>
+
+        <div class="card">
+            <h2>📸 ألبوم أخبار الصور المشترك</h2>
+            <div class="grid-layout" id="photoGrid">
+                <!-- صور افتراضية محملة مسبقاً -->
+                <div class="news-item">
+                    <img src="https://images.unsplash.com/photo-1508098682722-e99c43a406b2?q=80&w=400" class="news-img" alt="World Cup">
+                    <div class="news-body">
+                        <div class="news-title">حماس الجماهير في المدرجات</div>
+                    </div>
+                </div>
             </div>
-            <div class="form-group" style="grid-column: 1 / -1;">
-                <label>إضافة مهارة أو تجربة تود مشاركتها (اختياري)</label>
-                <textarea id="rsvpNote" placeholder="اكتب مشاركتك هنا..."></textarea>
-            </div>
-            <button class="btn-submit" onclick="submitRSVP()">تأكيد الحضور والنشر</button>
         </div>
     </div>
 
-    <!-- حائط المشاركات التفاعلي -->
-    <div class="card">
-        <h2>💬 أصداء فعاليات DZR</h2>
-        <div class="stats-box">
-            <div class="stat-card">
-                <div>إجمالي المشاركين</div>
-                <div class="stat-num" id="totalCount">0</div>
-            </div>
-            <div class="stat-card">
-                <div>المؤكد حضورهم</div>
-                <div class="stat-num" id="attendingCount" style="color: #16a085;">0</div>
+    <!-- الصفحة الثالثة: ترشيح فائز اليوم -->
+    <div id="p3" class="page">
+        <div class="card">
+            <h2>🗳️ توقع واربح: ترشيح بطل مواجهة اليوم</h2>
+            <p style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 15px;">شارك زملائك الـ 95 توقعاتك للمباريات الحالية، واختر الفريق الذي تراه الأقرب للفوز والمغادرة بالنقاط الثلاث.</p>
+            <div class="form-grid">
+                <div class="form-group">
+                    <label>الاسم الثنائي</label>
+                    <input type="text" id="voteName" placeholder="أدخل اسمك الكريم">
+                </div>
+                <div class="form-group">
+                    <label>ترشيحك للفريق الفائز اليوم</label>
+                    <input type="text" id="votedTeam" placeholder="اكتب اسم المنتخب المرشح للفوز">
+                </div>
+                <div class="form-group" style="grid-column: 1 / -1;">
+                    <label>سبب الترشيح أو التحليل الفني للمباراة (اختياري)</label>
+                    <textarea id="voteReason" placeholder="لماذا تعتقد أن هذا المنتخب سينتصر اليوم؟"></textarea>
+                </div>
+                <button class="btn-action" onclick="submitVote()">إرسال الترشيح للمنصة</button>
             </div>
         </div>
-        <div class="wall-grid" id="wallGrid"></div>
+
+        <div class="card">
+            <h2>📊 حائط توقعات وترشيحات الأعضاء</h2>
+            <div id="votesWall">
+                <!-- قائمة الترشيحات تظهر هنا -->
+            </div>
+        </div>
     </div>
 
 </div>
 
 <script>
-    const storageKey = 'dzr_wordwall_event_2026';
-    let guests = JSON.parse(localStorage.getItem(storageKey)) || [];
-
-    function renderWall() {
-        const grid = document.getElementById('wallGrid');
-        grid.innerHTML = '';
-        let attending = 0;
+    function switchPage(pageNum) {
+        document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+        document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
         
-        guests.forEach((guest, index) => {
-            if(guest.status.includes('نعم')) attending++;
-            const item = document.createElement('div');
-            item.className = 'wall-item';
-            let noteHTML = guest.note ? `<div style="margin-top:8px; font-size:0.9rem;">${guest.note}</div>` : '';
-            
-            item.innerHTML = `
-                <div class="wall-name">${guest.name}</div>
-                <div style="font-size:0.8rem; color: #16a085; font-weight:600;">الحالة: ${guest.status}</div>
-                ${noteHTML}
-                <div style="font-size:0.75rem; color:#888; margin-top:10px; text-align:left;">${guest.time}</div>
-            `;
-            grid.appendChild(item);
-        });
-
-        document.getElementById('totalCount').innerText = guests.length;
-        document.getElementById('attendingCount').innerText = attending;
+        document.getElementById(`p${pageNum}`).classList.add('active');
+        document.getElementById(`btn-p${pageNum}`).classList.add('active');
     }
 
-    function submitRSVP() {
-        const nameInput = document.getElementById('rsvpName');
-        const statusInput = document.getElementById('rsvpStatus');
-        const noteInput = document.getElementById('rsvpNote');
+    // إدارة قواعد البيانات المؤقتة
+    const storagePhotosKey = 'wc2026_photos_data';
+    const storageVotesKey = 'wc2026_votes_data';
 
-        if (!nameInput.value.trim()) {
-            alert('فضلاً أدخل الاسم الثنائي.');
+    let photoPosts = JSON.parse(localStorage.getItem(storagePhotosKey)) || [];
+    let votePosts = JSON.parse(localStorage.getItem(storageVotesKey)) || [];
+
+    function renderPhotos() {
+        const pGrid = document.getElementById('photoGrid');
+        // الاحتفاظ بالصورة الافتراضية الأولى
+        pGrid.innerHTML = `
+            <div class="news-item">
+                <img src="https://images.unsplash.com/photo-1508098682722-e99c43a406b2?q=80&w=400" class="news-img">
+                <div class="news-body"><div class="news-title">حماس الجماهير في المدرجات</div></div>
+            </div>
+        `;
+        photoPosts.forEach(post => {
+            const item = document.createElement('div');
+            item.className = 'news-item';
+            item.innerHTML = `
+                <img src="${post.url}" class="news-img" onerror="this.src='https://images.unsplash.com/photo-1508098682722-e99c43a406b2?q=80&w=400'">
+                <div class="news-body"><div class="news-title">${post.title}</div></div>
+            `;
+            pGrid.insertBefore(item, pGrid.firstChild);
+        });
+    }
+
+    function addImagePost() {
+        const titleInput = document.getElementById('imgTitle');
+        const urlInput = document.getElementById('imgUrl');
+
+        if (!titleInput.value.trim() || !urlInput.value.trim()) {
+            alert('فضلاً أملأ عنوان الصورة ورابط الـ URL الخاص بها.');
             return;
         }
 
-        const now = new Date();
-        const timeString = now.toLocaleTimeString('ar-EG', {hour: '2-digit', minute:'2-digit'});
+        photoPosts.unshift({ title: titleInput.value.trim(), url: urlInput.value.trim() });
+        localStorage.setItem(storagePhotosKey, JSON.stringify(photoPosts));
 
-        const newGuest = {
-            name: nameInput.value.trim(),
-            status: statusInput.value,
-            note: noteInput.value.trim(),
-            time: timeString
-        };
-
-        guests.unshift(newGuest);
-        localStorage.setItem(storageKey, JSON.stringify(guests));
-
-        nameInput.value = '';
-        noteInput.value = '';
-
-        renderWall();
-        alert('تم التسجيل بنجاح!');
+        titleInput.value = '';
+        urlInput.value = '';
+        renderPhotos();
+        alert('تمت إضافة الصورة بنجاح إلى الألبوم الموحد!');
     }
 
-    renderWall();
+    function renderVotes() {
+        const vWall = document.getElementById('votesWall');
+        vWall.innerHTML = '';
+        if (votePosts.length === 0) {
+            vWall.innerHTML = '<p style="color:#777; font-style:italic;">لا توجد ترشيحات مسجلة لمواجهات اليوم بعد.</p>';
+            return;
+        }
+        votePosts.forEach(vote => {
+            const item = document.createElement('div');
+            item.className = 'vote-card';
+            let reasonHTML = vote.reason ? `<div style="margin-top:5px; font-size:0.9rem; color:var(--text-secondary);">${vote.reason}</div>` : '';
+            item.innerHTML = `
+                <div class="vote-user">${vote.name}</div>
+                <div style="font-size:0.95rem; margin-top:3px;">المنتخب المرشح: <strong style="color: #4caf50;">${vote.team}</strong></div>
+                ${reasonHTML}
+            `;
+            vWall.appendChild(item);
+        });
+    }
+
+    function submitVote() {
+        const nameInput = document.getElementById('voteName');
+        const teamInput = document.getElementById('votedTeam');
+        const reasonInput = document.getElementById('voteReason');
+
+        if (!nameInput.value.trim() || !teamInput.value.trim()) {
+            alert('يرجى كتابة الاسم الثنائي وتحديد المنتخب المرشح.');
+            return;
+        }
+
+        votePosts.unshift({
+            name: nameInput.value.trim(),
+            team: teamInput.value.trim(),
+            reason: reasonInput.value.trim()
+        });
+
+        localStorage.setItem(storageVotesKey, JSON.stringify(votePosts));
+        nameInput.value = '';
+        teamInput.value = '';
+        reasonInput.value = '';
+        renderVotes();
+        alert('تم إرسال ترشيحك بنجاح وعرضه على لوحة التوقعات!');
+    }
+
+    // التشغيل الأولي
+    renderPhotos();
+    renderVotes();
 </script>
 
 </body>
