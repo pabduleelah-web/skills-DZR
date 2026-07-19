@@ -1,442 +1,69 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
-<head>
+<html lang="en">
+
+  <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>مركز كأس العالم FIFA 2026 التفاعلي</title>
-    <style>
-        :root {
-            --bg-main: #0c1017;
-            --bg-card: #161f2c;
-            --bg-table-header: #111823;
-            --accent: #d4af37;
-            --text-main: #ffffff;
-            --text-muted: #8b9bb4;
-            --border-color: #243242;
-            --live-color: #ff3333;
-        }
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: var(--bg-main);
-            color: var(--text-main);
-            margin: 0;
-            padding: 0;
-        }
-        header {
-            background: linear-gradient(rgba(12, 16, 23, 0.8), rgba(12, 16, 23, 0.95)), url('https://images.unsplash.com/photo-1508098682722-e99c43a406b2?q=80&w=1200') center/cover;
-            text-align: center;
-            padding: 40px 20px;
-            border-bottom: 3px solid var(--accent);
-        }
-        header h1 {
-            font-size: 2.2rem;
-            margin: 0 0 10px 0;
-            color: var(--accent);
-        }
-        header p {
-            color: var(--text-muted);
-            margin: 0;
-            font-size: 1.1rem;
-        }
-        nav {
-            background-color: var(--bg-table-header);
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            padding: 15px 0;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            border-bottom: 1px solid var(--border-color);
-        }
-        nav button {
-            background: none;
-            border: none;
-            color: var(--text-muted);
-            padding: 10px 25px;
-            font-size: 1rem;
-            font-weight: bold;
-            cursor: pointer;
-            border-radius: 6px;
-            transition: all 0.3s ease;
-        }
-        nav button.active, nav button:hover {
-            background-color: var(--accent);
-            color: #000000;
-            box-shadow: 0 2px 8px rgba(212, 175, 55, 0.4);
-        }
-        .container {
-            max-width: 1450px;
-            margin: 40px auto;
-            padding: 0 20px;
-        }
-        .page { display: none; }
-        .page.active { display: block; }
+    <title>FIFA World Cup 2026 (CSS only)</title>
+    <link rel="stylesheet" href="./style.css">
 
-        /* تنسيق شبكة المجموعات */
-        .groups-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
-            gap: 30px;
-        }
-        .group-card {
-            background-color: var(--bg-card);
-            border-radius: 10px;
-            border: 1px solid var(--border-color);
-            overflow: hidden;
-        }
-        .group-header {
-            background-color: var(--bg-table-header);
-            padding: 15px;
-            font-weight: bold;
-            color: var(--accent);
-            text-align: center;
-        }
-        table { width: 100%; border-collapse: collapse; text-align: center; font-size: 0.9rem; }
-        th, td { padding: 12px 8px; border-bottom: 1px solid var(--border-color); }
-        th { background-color: rgba(17, 24, 35, 0.6); color: var(--text-muted); }
-        td.team-info { text-align: right; font-weight: bold; padding-right: 15px; }
-        .points-col { font-weight: bold; color: var(--accent); }
-
-        /* تنسيق مخطط الأدوار الإقصائية الممتاز (Knockout Bracket) */
-        .bracket-wrapper {
-            overflow-x: auto;
-            padding: 20px 0;
-        }
-        .bracket-container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            min-width: 1400px;
-            gap: 15px;
-            direction: ltr;
-        }
-        .bracket-column {
-            display: flex;
-            flex-direction: column;
-            justify-content: space-around;
-            height: 720px;
-            width: 190px;
-        }
-        .match-box {
-            background-color: var(--bg-card);
-            border: 1px solid var(--border-color);
-            border-radius: 6px;
-            padding: 8px;
-            font-size: 0.85rem;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-        }
-        .match-box-title {
-            font-size: 0.7rem;
-            color: var(--text-muted);
-            border-bottom: 1px solid var(--border-color);
-            padding-bottom: 3px;
-            margin-bottom: 6px;
-            display: flex;
-            justify-content: space-between;
-        }
-        .bracket-team {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 4px 6px;
-            border-radius: 4px;
-            font-weight: bold;
-        }
-        .bracket-team.winner { color: var(--accent); }
-        .bracket-score {
-            background-color: var(--bg-main);
-            padding: 2px 6px;
-            border-radius: 3px;
-            min-width: 20px;
-            text-align: center;
-        }
-        .center-final {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 25px;
-            width: 240px;
-        }
-        .final-box {
-            border: 2px solid var(--accent);
-            width: 100%;
-        }
-        .live-pulse {
-            background: var(--live-color);
-            width: 6px;
-            height: 6px;
-            border-radius: 50%;
-            display: inline-block;
-        }
-        .flag {
-            margin-right: 5px;
-        }
-    </style>
-</head>
-<body>
-
-<header>
-    <h1>🏆 بطولة كأس العالم FIFA 2026 🏆</h1>
-    <p>تابع ترتيب المجموعات ومخطط مواجهات الأدوار الإقصائية مباشرة بالأعلام والفرق الكاملة</p>
-</header>
-
-<nav>
-    <button id="btn-tab1" onclick="switchTab(1)">📊 ترتيب المجموعات</button>
-    <button id="btn-tab2" class="active" onclick="switchTab(2)">🌿 شجرة الأدوار الإقصائية (Bracket)</button>
-</nav>
-
-<div class="container">
-
-    <!-- تبويب 1: ترتيب المجموعات -->
-    <div id="tab1" class="page">
-        <div class="groups-grid">
-            <div class="group-card">
-                <div class="group-header">المجموعة A</div>
-                <table>
-                    <thead>
-                        <tr><th style="text-align: right; padding-right:15px;">المنتخب</th><th>لعب</th><th>ف</th><th>ت</th><th>خ</th><th>له</th><th>عليه</th><th>نقاط</th></tr>
-                    </thead>
-                    <tbody>
-                        <tr><td class="team-info">🇲🇽 المكسيك</td><td>3</td><td>2</td><td>1</td><td>0</td><td>5</td><td>2</td><td class="points-col">7</td></tr>
-                        <tr><td class="team-info">🇺🇸 أمريكا</td><td>3</td><td>2</td><td>0</td><td>1</td><td>6</td><td>3</td><td class="points-col">6</td></tr>
-                        <tr><td class="team-info">🇨🇦 كندا</td><td>3</td><td>1</td><td>1</td><td>1</td><td>3</td><td>4</td><td class="points-col">4</td></tr>
-                        <tr><td class="team-info">🇺🇾 أوروغواي</td><td>3</td><td>0</td><td>0</td><td>3</td><td>1</td><td>6</td><td class="points-col">0</td></tr>
-                    </tbody>
-                </table>
-            </div>
-
-            <div class="group-card">
-                <div class="group-header">المجموعة B</div>
-                <table>
-                    <thead>
-                        <tr><th style="text-align: right; padding-right:15px;">المنتخب</th><th>لعب</th><th>ف</th><th>ت</th><th>خ</th><th>له</th><th>عليه</th><th>نقاط</th></tr>
-                    </thead>
-                    <tbody>
-                        <tr><td class="team-info">🇦🇷 الأرجنتين</td><td>3</td><td>2</td><td>1</td><td>0</td><td>7</td><td>2</td><td class="points-col">7</td></tr>
-                        <tr><td class="team-info">🇸🇦 السعودية</td><td>3</td><td>2</td><td>0</td><td>1</td><td>4</td><td>3</td><td class="points-col">6</td></tr>
-                        <tr><td class="team-info">🇫🇷 فرنسا</td><td>3</td><td>1</td><td>1</td><td>1</td><td>5</td><td>4</td><td class="points-col">4</td></tr>
-                        <tr><td class="team-info">🇦🇺 أستراليا</td><td>3</td><td>0</td><td>0</td><td>3</td><td>0</td><td>7</td><td class="points-col">0</td></tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
-
-    <!-- تبويب 2: شجرة الأدوار الإقصائية (Knockout Bracket) -->
-    <div id="tab2" class="page active">
-        <div class="bracket-wrapper">
-            <div class="bracket-container">
-                
-                <!-- الطرف الأيسر: دور الـ 32 -->
-                <div class="bracket-column">
-                    <div class="match-box">
-                        <div class="match-box-title"><span>M74</span><span>Full time</span></div>
-                        <div class="bracket-team"><span><span class="flag">🇩🇪</span> GER</span><span class="bracket-score">1</span></div>
-                        <div class="bracket-team winner"><span><span class="flag">🇵🇾</span> PAR</span><span class="bracket-score">1 (4)</span></div>
-                    </div>
-                    <div class="match-box">
-                        <div class="match-box-title"><span>M77</span><span>Full time</span></div>
-                        <div class="bracket-team winner"><span><span class="flag">🇫🇷</span> FRA</span><span class="bracket-score">3</span></div>
-                        <div class="bracket-team"><span><span class="flag">🇸🇪</span> SWE</span><span class="bracket-score">0</span></div>
-                    </div>
-                    <div class="match-box">
-                        <div class="match-box-title"><span>M73</span><span>Full time</span></div>
-                        <div class="bracket-team"><span><span class="flag">🇿🇦</span> RSA</span><span class="bracket-score">0</span></div>
-                        <div class="bracket-team winner"><span><span class="flag">🇨🇦</span> CAN</span><span class="bracket-score">1</span></div>
-                    </div>
-                    <div class="match-box">
-                        <div class="match-box-title"><span>M75</span><span>Full time</span></div>
-                        <div class="bracket-team"><span><span class="flag">🇳🇱</span> NED</span><span class="bracket-score">2 (1)</span></div>
-                        <div class="bracket-team winner"><span><span class="flag">🇲🇦</span> MAR</span><span class="bracket-score">2 (3)</span></div>
-                    </div>
-                    <div class="match-box">
-                        <div class="match-box-title"><span>M83</span><span>Full time</span></div>
-                        <div class="bracket-team winner"><span><span class="flag">🇵🇹</span> POR</span><span class="bracket-score">2</span></div>
-                        <div class="bracket-team"><span><span class="flag">🇭🇷</span> CRO</span><span class="bracket-score">1</span></div>
-                    </div>
-                    <div class="match-box">
-                        <div class="match-box-title"><span>M84</span><span>Full time</span></div>
-                        <div class="bracket-team winner"><span><span class="flag">🇪🇸</span> ESP</span><span class="bracket-score">3</span></div>
-                        <div class="bracket-team"><span><span class="flag">🇦🇹</span> AUT</span><span class="bracket-score">0</span></div>
-                    </div>
-                    <div class="match-box">
-                        <div class="match-box-title"><span>M81</span><span>Full time</span></div>
-                        <div class="bracket-team winner"><span><span class="flag">🇺🇸</span> USA</span><span class="bracket-score">2</span></div>
-                        <div class="bracket-team"><span><span class="flag">🇧🇦</span> BIH</span><span class="bracket-score">0</span></div>
-                    </div>
-                    <div class="match-box">
-                        <div class="match-box-title"><span>M82</span><span>Full time</span></div>
-                        <div class="bracket-team winner"><span><span class="flag">🇧🇪</span> BEL</span><span class="bracket-score">3</span></div>
-                        <div class="bracket-team"><span><span class="flag">🇸🇳</span> SEN</span><span class="bracket-score">2</span></div>
-                    </div>
-                </div>
-
-                <!-- الطرف الأيسر: دور الـ 16 -->
-                <div class="bracket-column">
-                    <div class="match-box">
-                        <div class="match-box-title"><span>M89</span><span>Full time</span></div>
-                        <div class="bracket-team"><span><span class="flag">🇵🇾</span> PAR</span><span class="bracket-score">0</span></div>
-                        <div class="bracket-team winner"><span><span class="flag">🇫🇷</span> FRA</span><span class="bracket-score">1</span></div>
-                    </div>
-                    <div class="match-box">
-                        <div class="match-box-title"><span>M90</span><span>Full time</span></div>
-                        <div class="bracket-team"><span><span class="flag">🇨🇦</span> CAN</span><span class="bracket-score">0</span></div>
-                        <div class="bracket-team winner"><span><span class="flag">🇲🇦</span> MAR</span><span class="bracket-score">3</span></div>
-                    </div>
-                    <div class="match-box">
-                        <div class="match-box-title"><span>M93</span><span>Full time</span></div>
-                        <div class="bracket-team"><span><span class="flag">🇵🇹</span> POR</span><span class="bracket-score">0</span></div>
-                        <div class="bracket-team winner"><span><span class="flag">🇪🇸</span> ESP</span><span class="bracket-score">1</span></div>
-                    </div>
-                    <div class="match-box">
-                        <div class="match-box-title"><span>M94</span><span>Full time</span></div>
-                        <div class="bracket-team"><span><span class="flag">🇺🇸</span> USA</span><span class="bracket-score">1</span></div>
-                        <div class="bracket-team winner"><span><span class="flag">🇧🇪</span> BEL</span><span class="bracket-score">4</span></div>
-                    </div>
-                </div>
-
-                <!-- الطرف الأيسر: ربع النهائي -->
-                <div class="bracket-column">
-                    <div class="match-box">
-                        <div class="match-box-title"><span>M97</span><span>Full time</span></div>
-                        <div class="bracket-team winner"><span><span class="flag">🇫🇷</span> FRA</span><span class="bracket-score">2</span></div>
-                        <div class="bracket-team"><span><span class="flag">🇲🇦</span> MAR</span><span class="bracket-score">0</span></div>
-                    </div>
-                    <div class="match-box">
-                        <div class="match-box-title"><span>M98</span><span>Full time</span></div>
-                        <div class="bracket-team winner"><span><span class="flag">🇪🇸</span> ESP</span><span class="bracket-score">2</span></div>
-                        <div class="bracket-team"><span><span class="flag">🇧🇪</span> BEL</span><span class="bracket-score">1</span></div>
-                    </div>
-                </div>
-
-                <!-- المنتصف: نصف النهائي والنهائي والمركز الثالث -->
-                <div class="center-final">
-                    <!-- نصف النهائي الأيسر -->
-                    <div class="match-box" style="width: 100%;">
-                        <div class="match-box-title"><span>M101</span><span>Full time</span></div>
-                        <div class="bracket-team"><span><span class="flag">🇫🇷</span> FRA</span><span class="bracket-score">0</span></div>
-                        <div class="bracket-team winner"><span><span class="flag">🇪🇸</span> ESP</span><span class="bracket-score">2</span></div>
-                    </div>
-
-                    <!-- النهائي الكبير M104 -->
-                    <div class="match-box final-box">
-                        <div class="match-box-title" style="color: var(--accent);"><span>النهائي M104</span><span>Live <span class="live-pulse"></span></span></div>
-                        <div class="bracket-team winner"><span><span class="flag">🇪🇸</span> ESP</span><span class="bracket-score">0</span></div>
-                        <div class="bracket-team"><span><span class="flag">🇦🇷</span> ARG</span><span class="bracket-score">0</span></div>
-                    </div>
-
-                    <!-- مباراة تحديد المركز الثالث M103 -->
-                    <div class="match-box" style="width: 100%;">
-                        <div class="match-box-title"><span>المركز الثالث M103</span><span>Full time</span></div>
-                        <div class="bracket-team"><span><span class="flag">🇫🇷</span> FRA</span><span class="bracket-score">4</span></div>
-                        <div class="bracket-team winner"><span><span class="flag">🏴󠁧󠁢󠁥󠁮󠁧󠁿</span> ENG</span><span class="bracket-score">6</span></div>
-                    </div>
-
-                    <!-- نصف النهائي الأيمن -->
-                    <div class="match-box" style="width: 100%;">
-                        <div class="match-box-title"><span>M102</span><span>Full time</span></div>
-                        <div class="bracket-team winner"><span><span class="flag">🏴󠁧󠁢󠁥󠁮󠁧󠁿</span> ENG</span><span class="bracket-score">2</span></div>
-                        <div class="bracket-team"><span><span class="flag">🇦🇷</span> ARG</span><span class="bracket-score">2</span></div>
-                    </div>
-                </div>
-
-                <!-- الطرف الأيمن: ربع النهائي -->
-                <div class="bracket-column">
-                    <div class="match-box">
-                        <div class="match-box-title"><span>M99</span><span>Full time</span></div>
-                        <div class="bracket-team"><span><span class="flag">🇳🇴</span> NOR</span><span class="bracket-score">1</span></div>
-                        <div class="bracket-team winner"><span><span class="flag">🏴󠁧󠁢󠁥󠁮󠁧󠁿</span> ENG</span><span class="bracket-score">2</span></div>
-                    </div>
-                    <div class="match-box">
-                        <div class="match-box-title"><span>M100</span><span>Full time</span></div>
-                        <div class="bracket-team winner"><span><span class="flag">🇦🇷</span> ARG</span><span class="bracket-score">3</span></div>
-                        <div class="bracket-team"><span><span class="flag">🇨🇭</span> SUI</span><span class="bracket-score">1</span></div>
-                    </div>
-                </div>
-
-                <!-- الطرف الأيمن: دور الـ 16 -->
-                <div class="bracket-column">
-                    <div class="match-box">
-                        <div class="match-box-title"><span>M91</span><span>Full time</span></div>
-                        <div class="bracket-team"><span><span class="flag">🇧🇷</span> BRA</span><span class="bracket-score">1</span></div>
-                        <div class="bracket-team winner"><span><span class="flag">🇳🇴</span> NOR</span><span class="bracket-score">2</span></div>
-                    </div>
-                    <div class="match-box">
-                        <div class="match-box-title"><span>M92</span><span>Full time</span></div>
-                        <div class="bracket-team"><span><span class="flag">🇲🇽</span> MEX</span><span class="bracket-score">2</span></div>
-                        <div class="bracket-team winner"><span><span class="flag">🏴󠁧󠁢󠁥󠁮󠁧󠁿</span> ENG</span><span class="bracket-score">3</span></div>
-                    </div>
-                    <div class="match-box">
-                        <div class="match-box-title"><span>M95</span><span>Full time</span></div>
-                        <div class="bracket-team winner"><span><span class="flag">🇦🇷</span> ARG</span><span class="bracket-score">3</span></div>
-                        <div class="bracket-team"><span><span class="flag">🇪🇬</span> EGY</span><span class="bracket-score">2</span></div>
-                    </div>
-                    <div class="match-box">
-                        <div class="match-box-title"><span>M96</span><span>Full time</span></div>
-                        <div class="bracket-team winner"><span><span class="flag">🇨🇭</span> SUI</span><span class="bracket-score">4 (0)</span></div>
-                        <div class="bracket-team"><span><span class="flag">🇨🇴</span> COL</span><span class="bracket-score">3 (0)</span></div>
-                    </div>
-                </div>
-
-                <!-- الطرف الأيمن: دور الـ 32 -->
-                <div class="bracket-column">
-                    <div class="match-box">
-                        <div class="match-box-title"><span>M76</span><span>Full time</span></div>
-                        <div class="bracket-team winner"><span><span class="flag">🇧🇷</span> BRA</span><span class="bracket-score">2</span></div>
-                        <div class="bracket-team"><span><span class="flag">🇯🇵</span> JPN</span><span class="bracket-score">1</span></div>
-                    </div>
-                    <div class="match-box">
-                        <div class="match-box-title"><span>M78</span><span>Full time</span></div>
-                        <div class="bracket-team"><span><span class="flag">🇨🇮</span> CIV</span><span class="bracket-score">1</span></div>
-                        <div class="bracket-team winner"><span><span class="flag">🇳🇴</span> NOR</span><span class="bracket-score">2</span></div>
-                    </div>
-                    <div class="match-box">
-                        <div class="match-box-title"><span>M79</span><span>Full time</span></div>
-                        <div class="bracket-team winner"><span><span class="flag">🇲🇽</span> MEX</span><span class="bracket-score">2</span></div>
-                        <div class="bracket-team"><span><span class="flag">🇪🇨</span> ECU</span><span class="bracket-score">0</span></div>
-                    </div>
-                    <div class="match-box">
-                        <div class="match-box-title"><span>M80</span><span>Full time</span></div>
-                        <div class="bracket-team winner"><span><span class="flag">🏴󠁧󠁢󠁥󠁮󠁧󠁿</span> ENG</span><span class="bracket-score">2</span></div>
-                        <div class="bracket-team"><span><span class="flag">🇨🇩</span> COD</span><span class="bracket-score">1</span></div>
-                    </div>
-                    <div class="match-box">
-                        <div class="match-box-title"><span>M86</span><span>Full time</span></div>
-                        <div class="bracket-team winner"><span><span class="flag">🇦🇷</span> ARG</span><span class="bracket-score">3</span></div>
-                        <div class="bracket-team"><span><span class="flag">🇨🇵</span> CPV</span><span class="bracket-score">2</span></div>
-                    </div>
-                    <div class="match-box">
-                        <div class="match-box-title"><span>M88</span><span>Full time</span></div>
-                        <div class="bracket-team"><span><span class="flag">🇦🇺</span> AUS</span><span class="bracket-score">2 (1)</span></div>
-                        <div class="bracket-team winner"><span><span class="flag">🇪🇬</span> EGY</span><span class="bracket-score">2 (4)</span></div>
-                    </div>
-                    <div class="match-box">
-                        <div class="match-box-title"><span>M85</span><span>Full time</span></div>
-                        <div class="bracket-team winner"><span><span class="flag">🇨🇭</span> SUI</span><span class="bracket-score">2</span></div>
-                        <div class="bracket-team"><span><span class="flag">🇩🇿</span> ALG</span><span class="bracket-score">0</span></div>
-                    </div>
-                    <div class="match-box">
-                        <div class="match-box-title"><span>M87</span><span>Full time</span></div>
-                        <div class="bracket-team winner"><span><span class="flag">🇨🇴</span> COL</span><span class="bracket-score">1</span></div>
-                        <div class="bracket-team"><span><span class="flag">🇬🇭</span> GHA</span><span class="bracket-score">0</span></div>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-    </div>
-
+  </head>
+    
+  <body>
+  <div class="logo">
+  <div class="num num-two">
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+  <div class="num num-six">
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+  <img src="https://www.donotfold.be/data/codepen/wk2026/fifa-world-cup-2026.png" alt="" />
 </div>
-
-<script>
-    function switchTab(tabNum) {
-        document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-        document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
-        
-        document.getElementById(`tab${tabNum}`).classList.add('active');
-        document.getElementById(`btn-tab${tabNum}`).classList.add('active');
-    }
-</script>
-</body>
+    
+  </body>
+  
 </html>
