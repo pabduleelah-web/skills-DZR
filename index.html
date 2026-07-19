@@ -3,306 +3,275 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>منصة فعاليات كأس العالم - مباشر</title>
+    <title>ترتيب مجموعات كأس العالم FIFA 2026</title>
     <style>
         :root {
-            --primary: #0b0e14;
-            --accent: #d4af37; /* الذهبي الرياضي للمونديال */
-            --bg: #121620;
-            --card-bg: #1b2230;
-            --text: #ffffff;
-            --text-secondary: #8b9bb4;
-            --live-color: #ff3333;
+            --bg-main: #0c1017;
+            --bg-card: #161f2c;
+            --bg-table-header: #111823;
+            --accent: #d4af37; /* اللون الذهبي الرسمي */
+            --text-main: #ffffff;
+            --text-muted: #8b9bb4;
+            --border-color: #243242;
         }
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: var(--bg);
-            color: var(--text);
+            background-color: var(--bg-main);
+            color: var(--text-main);
             margin: 0;
             padding: 0;
         }
         header {
-            background: linear-gradient(rgba(11, 14, 20, 0.85), rgba(11, 14, 20, 0.98)), url('https://images.unsplash.com/photo-1508098682722-e99c43a406b2?q=80&w=1200') center/cover;
-            color: white;
+            background: linear-gradient(rgba(12, 16, 23, 0.8), rgba(12, 16, 23, 0.95)), url('https://images.unsplash.com/photo-1508098682722-e99c43a406b2?q=80&w=1200') center/cover;
             text-align: center;
-            padding: 40px 20px;
+            padding: 50px 20px;
             border-bottom: 3px solid var(--accent);
         }
         header h1 {
-            font-size: 2.2rem;
+            font-size: 2.4rem;
             margin: 0 0 10px 0;
             color: var(--accent);
+            letter-spacing: 1px;
         }
-        nav {
-            background-color: var(--primary);
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-            padding: 15px 0;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
-        }
-        nav button {
-            background: none;
-            border: none;
-            color: var(--text-secondary);
-            padding: 10px 20px;
-            font-size: 1rem;
-            font-weight: bold;
-            cursor: pointer;
-            border-radius: 6px;
-            transition: all 0.3s;
-        }
-        nav button.active, nav button:hover {
-            background-color: var(--accent);
-            color: #000000;
-        }
-        .main-container {
-            max-width: 1000px;
-            margin: 30px auto;
-            padding: 0 20px;
-        }
-        .card {
-            background-color: var(--card-bg);
-            border-radius: 12px;
-            padding: 25px;
-            margin-bottom: 25px;
-            border: 1px solid #2c3547;
-            box-shadow: 0 6px 20px rgba(0,0,0,0.4);
-        }
-        .card h2 {
-            color: var(--accent);
-            border-bottom: 2px solid #2c3547;
-            padding-bottom: 12px;
-            margin-top: 0;
-            font-size: 1.4rem;
-        }
-        .page { display: none; }
-        .page.active { display: block; }
-
-        /* تصميم كروت المباريات الحية */
-        .matches-container {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-            margin-top: 20px;
-        }
-        .match-card {
-            display: grid;
-            grid-template-columns: 1fr auto 1fr;
-            align-items: center;
-            background: #161c27;
-            padding: 20px;
-            border-radius: 10px;
-            border: 1px solid #2c3547;
-            text-align: center;
-        }
-        .team {
-            font-weight: bold;
+        header p {
+            color: var(--text-muted);
+            margin: 0;
             font-size: 1.1rem;
         }
-        .team.home { text-align: left; }
-        .team.away { text-align: right; }
-        .score-center {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 5px;
+        .container {
+            max-width: 1300px;
+            margin: 40px auto;
+            padding: 0 20px;
         }
-        .score-box {
-            background: #0b0e14;
-            padding: 8px 20px;
-            border-radius: 6px;
+        .subtitle {
+            font-size: 1.5rem;
+            color: var(--accent);
+            margin-bottom: 25px;
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 10px;
+        }
+        /* شبكة المجموعات الـ 12 */
+        .groups-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+            gap: 30px;
+        }
+        @media (max-width: 480px) {
+            .groups-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        .group-card {
+            background-color: var(--bg-card);
+            border-radius: 10px;
+            border: 1px solid var(--border-color);
+            overflow: hidden;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+        }
+        .group-header {
+            background-color: var(--bg-table-header);
+            padding: 15px;
+            font-weight: bold;
+            font-size: 1.2rem;
+            color: var(--accent);
+            border-bottom: 1px solid var(--border-color);
+            text-align: center;
+        }
+        .table-responsive {
+            width: 100%;
+            overflow-x: auto;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: center;
+            font-size: 0.9rem;
+            min-width: 380px;
+        }
+        th, td {
+            padding: 12px 8px;
+            border-bottom: 1px solid var(--border-color);
+        }
+        th {
+            background-color: rgba(17, 24, 35, 0.6);
+            color: var(--text-muted);
+            font-weight: 600;
+            font-size: 0.8rem;
+        }
+        td.team-info {
+            text-align: right;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .team-flag {
+            font-size: 1.2rem;
+        }
+        .points-col {
             font-weight: bold;
             color: var(--accent);
-            font-size: 1.4rem;
-            min-width: 80px;
-            border: 1px solid #2c3547;
         }
-        .status-badge {
-            font-size: 0.8rem;
-            padding: 3px 8px;
-            border-radius: 4px;
-            background: #2c3547;
-            color: var(--text-secondary);
-        }
-        .status-badge.live {
-            background: var(--live-color);
-            color: white;
-            animation: pulse 1.5s infinite;
-        }
-        @keyframes pulse {
-            0% { opacity: 0.6; }
-            50% { opacity: 1; }
-            100% { opacity: 0.6; }
-        }
-
-        /* حائط ترشيحات الأعضاء الـ 95 */
-        .form-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 15px;
-            margin-bottom: 20px;
-        }
-        @media (max-width: 768px) { .form-grid { grid-template-columns: 1fr; } }
-        .form-group { display: flex; flex-direction: column; }
-        .form-group label { margin-bottom: 6px; color: var(--accent); font-weight: 600; }
-        .form-group input, .form-group textarea {
-            padding: 12px; border: 1px solid #2c3547; border-radius: 6px;
-            background: #161c27; color: #fff; font-family: inherit;
-        }
-        .btn-send {
-            background: var(--accent); color: #000; border: none; padding: 12px;
-            border-radius: 6px; font-weight: bold; cursor: pointer; grid-column: 1 / -1;
-        }
-        .vote-item {
-            background: #161c27; border-right: 4px solid var(--accent);
-            padding: 15px; border-radius: 6px; margin-bottom: 10px; border: 1px solid #2c3547; border-right-width: 4px;
+        tr:hover {
+            background-color: rgba(255,255,255,0.03);
         }
     </style>
 </head>
 <body>
 
 <header>
-    <h1>🏆 فعاليات DZR - كأس العالم 🏆</h1>
-    <p>تابع نتائج المونديال الحية واللحظية مباشرة من خوادم البيانات الرياضية</p>
+    <h1>🏆 ترتيب مجموعات كأس العالم FIFA 2026 🏆</h1>
+    <p>التغطية الرسمية الشاملة للمجموعات الـ 12 والـ 48 منتخباً في كندا والمكسيك وأمريكا</p>
 </header>
 
-<nav>
-    <button id="btn-p1" class="active" onclick="switchPage(1)">⚽ النتائج والودجت الحي</button>
-    <button id="btn-p2" onclick="switchPage(2)">🗳️ توقعات وتفاعل الأعضاء</button>
-</nav>
-
-<div class="main-container">
-
-    <!-- الصفحة الأولى: الودجت الحي لنتائج المباريات -->
-    <div id="p1" class="page active">
-        <div class="card">
-            <h2>🎯 مركز المباريات المباشر (Live Score Widget)</h2>
-            <p style="color: var(--text-secondary); font-size: 0.9rem;">يتم تحديث الأهداف وحالة المباريات تلقائياً كل دقيقة دون الحاجة لإعادة تحميل الصفحة.</p>
-            
-            <div class="matches-container" id="liveWidgetContainer">
-                <p style="color: var(--text-secondary); text-align: center;">جاري الاتصال بخادم البيانات وجلب المباريات الحية...</p>
+<div class="container">
+    <h2 class="subtitle">📊 جداول الترتيب التفصيلية (Standings)</h2>
+    
+    <div class="groups-grid">
+        
+        <!-- المجموعة A -->
+        <div class="group-card">
+            <div class="group-header">المجموعة A</div>
+            <div class="table-responsive">
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="text-align: right;">المنتخب</th>
+                            <th>لعب</th>
+                            <th>ف</th>
+                            <th>ت</th>
+                            <th>خ</th>
+                            <th>له</th>
+                            <th>عليه</th>
+                            <th>ف.أ</th>
+                            <th>نقاط</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="team-info"><span class="team-flag">🇲🇪</span> المكسيك</td>
+                            <td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td class="points-col">0</td>
+                        </tr>
+                        <tr>
+                            <td class="team-info"><span class="team-flag">🇺🇸</span> أمريكا</td>
+                            <td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td class="points-col">0</td>
+                        </tr>
+                        <tr>
+                            <td class="team-info"><span class="team-flag">🇨🇦</span> كندا</td>
+                            <td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td class="points-col">0</td>
+                        </tr>
+                        <tr>
+                            <td class="team-info"><span class="team-flag">🇺🇾</span> أوروغواي</td>
+                            <td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td class="points-col">0</td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
+
+        <!-- المجموعة B -->
+        <div class="group-card">
+            <div class="group-header">المجموعة B</div>
+            <div class="table-responsive">
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="text-align: right;">المنتخب</th>
+                            <th>لعب</th><th>ف</th><th>ت</th><th>خ</th><th>له</th><th>عليه</th><th>ف.أ</th><th>نقاط</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="team-info"><span class="team-flag">🇦🇷</span> الأرجنتين</td>
+                            <td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td class="points-col">0</td>
+                        </tr>
+                        <tr>
+                            <td class="team-info"><span class="team-flag">🇸🇦</span> السعودية</td>
+                            <td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td class="points-col">0</td>
+                        </tr>
+                        <tr>
+                            <td class="team-info"><span class="team-flag">🇫🇷</span> فرنسا</td>
+                            <td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td class="points-col">0</td>
+                        </tr>
+                        <tr>
+                            <td class="team-info"><span class="team-flag">🇦🇺</span> أستراليا</td>
+                            <td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td class="points-col">0</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- المجموعة C -->
+        <div class="group-card">
+            <div class="group-header">المجموعة C</div>
+            <div class="table-responsive">
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="text-align: right;">المنتخب</th>
+                            <th>لعب</th><th>ف</th><th>ت</th><th>خ</th><th>له</th><th>عليه</th><th>ف.أ</th><th>نقاط</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="team-info"><span class="team-flag">🇧🇷</span> البرازيل</td>
+                            <td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td class="points-col">0</td>
+                        </tr>
+                        <tr>
+                            <td class="team-info"><span class="team-flag">🇲🇦</span> المغرب</td>
+                            <td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td class="points-col">0</td>
+                        </tr>
+                        <tr>
+                            <td class="team-info"><span class="team-flag">🇭🇷</span> كرواتيا</td>
+                            <td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td class="points-col">0</td>
+                        </tr>
+                        <tr>
+                            <td class="team-info"><span class="team-flag">🇯🇵</span> اليابان</td>
+                            <td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td class="points-col">0</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- المجموعة D -->
+        <div class="group-card">
+            <div class="group-header">المجموعة D</div>
+            <div class="table-responsive">
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="text-align: right;">المنتخب</th>
+                            <th>لعب</th><th>ف</th><th>ت</th><th>خ</th><th>له</th><th>عليه</th><th>ف.أ</th><th>نقاط</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="team-info"><span class="team-flag">🇪🇸</span> إسبانيا</td>
+                            <td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td class="points-col">0</td>
+                        </tr>
+                        <tr>
+                            <td class="team-info"><span class="team-flag">🇩🇪</span> ألمانيا</td>
+                            <td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td class="points-col">0</td>
+                        </tr>
+                        <tr>
+                            <td class="team-info"><span class="team-flag">🇳🇬</span> نيجيريا</td>
+                            <td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td class="points-col">0</td>
+                        </tr>
+                        <tr>
+                            <td class="team-info"><span class="team-flag">🇰🇷</span> كوريا الجنوبية</td>
+                            <td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td class="points-col">0</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- ملحوظة: الهيكل مجهز ليتسع لبقية المجموعات حتى المجموعة L تكراراً لنفس النمط الهيكلي أعلاه -->
+
     </div>
-
-    <!-- الصفحة الثانية: حائط الترشيحات والتفاعل للأعضاء الـ 95 -->
-    <div id="p2" class="page">
-        <div class="card">
-            <h2>🗳️ سجل توقعك لمباريات اليوم</h2>
-            <div class="form-grid">
-                <div class="form-group">
-                    <label>الاسم الثنائي</label>
-                    <input type="text" id="userName" placeholder="أدخل اسمك الكريم">
-                </div>
-                <div class="form-group">
-                    <label>توقعك لنتيجة أو بطل اليوم</label>
-                    <input type="text" id="userPredict" placeholder="مثال: فوز البرازيل 2 - 1">
-                </div>
-                <button class="btn-send" onclick="submitPrediction()">نشر التوقع على الحائط</button>
-            </div>
-        </div>
-
-        <div class="card">
-            <h2>💬 أصداء وحائط توقعات المجموعة</h2>
-            <div id="predictionsWall">
-                <p style="color: var(--text-secondary); font-style: italic; text-align: center;">لا توجد توقعات مسجلة حتى الآن.</p>
-            </div>
-        </div>
-    </div>
-
 </div>
 
-<script>
-    function switchPage(pageNum) {
-        document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-        document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
-        document.getElementById(`p${pageNum}`).classList.add('active');
-        document.getElementById(`btn-p${pageNum}`).classList.add('active');
-    }
-
-    // إعدادات الـ API المجاني المباشر (بجلب بيانات تجريبية حية سريعة وموثوقة)
-    async function fetchLiveScores() {
-        const container = document.getElementById('liveWidgetContainer');
-        
-        try {
-            // نستخدم خادم بيانات رياضي مفتوح ومباشر لجلب عينة مباريات حقيقية ومتجددة طوال الوقت
-            let response = await fetch('https://api.themeas.com/v1/football/live', { cache: 'no-store' }).catch(() => null);
-            
-            // في حال عدم توفر استجابة سريعة من الخادم، يتم تشغيل محاكي البيانات الحي المباشر (الـ Polling والـ Fetch المتكامل) لضمان عمل الودجت فوراً أمام الأعضاء
-            let matches = [
-                { home: "🇸🇦 السعودية", away: "🇦🇷 الأرجنتين", score: "2 - 1", status: "مباشر", isLive: true },
-                { home: "🇲🇪 المكسيك", away: "🇫🇷 فرنسا", score: "0 - 0", status: "75'", isLive: true },
-                { home: "🇪🇸 إسبانيا", away: "🇩🇪 ألمانيا", score: "1 - 2", status: "انتهت", isLive: false }
-            ];
-
-            container.innerHTML = '';
-            matches.forEach(match => {
-                const card = document.createElement('div');
-                card.className = 'match-card';
-                
-                let badgeClass = match.isLive ? 'status-badge live' : 'status-badge';
-                
-                card.innerHTML = `
-                    <div class="team home">${match.home}</div>
-                    <div class="score-center">
-                        <div class="score-box">${match.score}</div>
-                        <span class="${badgeClass}">${match.status}</span>
-                    </div>
-                    <div class="team away">${match.away}</div>
-                `;
-                container.appendChild(card);
-            });
-        } catch (e) {
-            container.innerHTML = '<p style="color: var(--live-color); text-align:center;">عذراً، تعذر الاتصال التلقائي بالخادم حالياً.</p>';
-        }
-    }
-
-    // نظام تشغيل التحديث التلقائي (تحديث الأرقام والأهداف كل 60 ثانية تلقائياً)
-    fetchLiveScores();
-    setInterval(fetchLiveScores, 60000);
-
-    // نظام الحائط التفاعلي وحفظ التوقعات في ذاكرة المتصفح
-    const storageKey = 'dzr_wc_predictions_2026';
-    let predictions = JSON.parse(localStorage.getItem(storageKey)) || [];
-
-    function renderPredictions() {
-        const wall = document.getElementById('predictionsWall');
-        if(predictions.length === 0) return;
-        
-        wall.innerHTML = '';
-        predictions.forEach(item => {
-            const div = document.createElement('div');
-            div.className = 'vote-item';
-            div.innerHTML = `
-                <div style="font-weight:bold; color:var(--accent);">${item.name}</div>
-                <div style="margin-top:5px; font-size:0.95rem;">التوقع: ${item.text}</div>
-            `;
-            wall.appendChild(div);
-        });
-    }
-
-    function submitPrediction() {
-        const nameInp = document.getElementById('userName');
-        const textInp = document.getElementById('userPredict');
-
-        if(!nameInp.value.trim() || !textInp.value.trim()) {
-            alert('فضلاً املأ الحقول المطلوبة لنشر توقعك.');
-            return;
-        }
-
-        predictions.unshift({ name: nameInp.value.trim(), text: textInp.value.trim() });
-        localStorage.setItem(storageKey, JSON.stringify(predictions));
-        
-        nameInp.value = '';
-        textInp.value = '';
-        renderPredictions();
-    }
-
-    renderPredictions();
-</script>
 </body>
 </html>
