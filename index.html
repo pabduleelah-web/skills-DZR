@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>فعالية تحدي المهارات المتكاملة</title>
+    <style>
+        :root {
+            --bg-color: #f4f6f9;
+            --card-bg: #ffffff;
+            --primary-color: #2c3e50;
+            --accent-color: #16a085;
+            --text-color: #333;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 20px;
+        }
+        header {
+            text-align: center;
+            background: linear-gradient(135deg, var(--primary-color), #34495e);
+            color: white;
+            padding: 30px 20px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        .container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        .column {
+            background-color: var(--card-bg);
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            display: flex;
+            flex-direction: column;
+        }
+        .column h2 {
+            font-size: 1.2rem;
+            color: var(--primary-color);
+            border-bottom: 3px solid var(--accent-color);
+            padding-bottom: 10px;
+            margin-top: 0;
+        }
+        .instructions {
+            font-size: 0.9rem;
+            color: #666;
+            background-color: #f9f9f9;
+            padding: 10px;
+            border-left: 3px solid #ccc;
+            border-radius: 4px;
+            margin-bottom: 15px;
+        }
+        .form-group {
+            margin-bottom: 12px;
+        }
+        .form-group input, .form-group textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+            font-family: inherit;
+        }
+        .form-group textarea {
+            resize: vertical;
+            height: 80px;
+        }
+        button {
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 100%;
+            font-weight: bold;
+            transition: background 0.2s;
+        }
+        button:hover {
+            background-color: #117a65;
+        }
+        .posts-list {
+            margin-top: 20px;
+            overflow-y: auto;
+            max-height: 400px;
+            flex-grow: 1;
+        }
+        .post-card {
+            background: #fdfdfd;
+            border: 1px solid #eaeaea;
+            padding: 12px;
+            border-radius: 6px;
+            margin-bottom: 10px;
+            position: relative;
+        }
+        .post-author {
+            font-weight: bold;
+            font-size: 0.9rem;
+            color: var(--primary-color);
+            margin-bottom: 5px;
+        }
+        .post-content {
+            font-size: 0.9rem;
+            white-space: pre-line;
+        }
+        .post-interactions {
+            margin-top: 8px;
+            display: flex;
+            gap: 10px;
+            font-size: 0.8rem;
+        }
+        .like-btn {
+            cursor: pointer;
+            color: #e74c3c;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>🎯 مدونة فعالية "تحدي المهارات المتكاملة"</h1>
+    <p>مساحة تفاعلية مخصصة لأعضاء المجموعة لمشاركة المهارات والإبداع والتقييم البنّاء.</p>
+</header>
+
+<div class="container">
+    <!-- العمود الأول -->
+    <div class="column" id="col1">
+        <h2>📝 مهارة الإيجاز والتحرير</h2>
+        <div class="instructions">اكتب في 3 أسطر: كتاباً أثر في مسيرتك، أو تجربة إدارية خرجت منها بدرس ثمين.</div>
+        <div class="form-group"><input type="text" placeholder="الاسم الثنائي" id="name1"></div>
+        <div class="form-group"><textarea placeholder="اكتب مشاركتك هنا..." id="text1"></textarea></div>
+        <button onclick="addPost(1)">نشر المشاركة</button>
+        <div class="posts-list" id="posts1"></div>
+    </div>
+
+    <!-- العمود الثاني -->
+    <div class="column" id="col2">
+        <h2>💡 مهارة حل المشكلات</h2>
+        <div class="instructions">كيف نحافظ على إنتاجية عالية وعلاقات ممتازة بالفريق دون ضغوط؟ ضع حلاً في نقطتين.</div>
+        <div class="form-group"><input type="text" placeholder="الاسم الثنائي" id="name2"></div>
+        <div class="form-group"><textarea placeholder="اكتب الحل المقترح هنا..." id="text2"></textarea></div>
+        <button onclick="addPost(2)">نشر المشاركة</button>
+        <div class="posts-list" id="posts2"></div>
+    </div>
+
+    <!-- العمود الثالث -->
+    <div class="column" id="col3">
+        <h2>📸 مهارة توثيق الأفكار (رابط صورة)</h2>
+        <div class="instructions">ضع رابط صورة من تصويرك الخاص (مكتبك، بيئتك) تعبر عن الإنتاجية مع عنوان ملهم.</div>
+        <div class="form-group"><input type="text" placeholder="الاسم الثنائي" id="name3"></div>
+        <div class="form-group"><input type="text" placeholder="عنوان الصورة" id="title3"></div>
+        <div class="form-group"><input type="text" placeholder="رابط الصورة (URL)" id="text3"></div>
+        <button onclick="addPost(3)">نشر المشاركة</button>
+        <div class="posts-list" id="posts3"></div>
+    </div>
+
+    <!-- العمود الرابع -->
+    <div class="column" id="col4">
+        <h2>🤝 مهارة التقييم والتواصل</h2>
+        <div class="instructions">تصفح مشاركات زملائك، وضَع تعليقاً نقدياً بنّاءً يضيف قيمة حقيقية لأي مشاركة.</div>
+        <div class="form-group"><input type="text" placeholder="الاسم الثنائي" id="name4"></div>
+        <div class="form-group"><textarea placeholder="اكتب تعليقك البنّاء هنا..." id="text4"></textarea></div>
+        <button onclick="addPost(4)">نشر التعليق</button>
+        <div class="posts-list" id="posts4"></div>
+    </div>
+</div>
+
+<script>
+    // الحفظ المؤقت للمشاركات في المتصفح المحلي لضمان بقائها عند التحديث
+    let storageKey = 'skills_event_posts_2026';
+    let data = JSON.parse(localStorage.getItem(storageKey)) || { 1: [], 2: [], 3: [], 4: [] };
+
+    function renderPosts() {
+        for (let i = 1; i <= 4; i++) {
+            const list = document.getElementById(`posts${i}`);
+            list.innerHTML = '';
+            data[i].forEach((post, index) => {
+                let contentHTML = post.text;
+                if (i === 3) {
+                    contentHTML = `<strong>${post.title || ''}</strong><br><a href="${post.text}" target="_blank" style="color:#16a085;">مشاهدة الصورة 🔗</a>`;
+                }
+                const card = document.createElement('div');
+                card.className = 'post-card';
+                card.innerHTML = `
+                    <div class="post-author">${post.name}</div>
+                    <div class="post-content">${contentHTML}</div>
+                    <div class="post-interactions">
+                        <span class="like-btn" onclick="likePost(${i}, ${index})">❤️ ${post.likes || 0}</span>
+                    </div>
+                `;
+                list.appendChild(card);
+            });
+        }
+    }
+
+    function addPost(colId) {
+        const nameInput = document.getElementById(`name${colId}`);
+        const textInput = document.getElementById(`text${colId}`);
+        let titleInput = colId === 3 ? document.getElementById(`title3`) : null;
+
+        if (!nameInput.value.trim() || !textInput.value.trim()) {
+            alert('فضلاً املأ جميع الحقول المطلوبة.');
+            return;
+        }
+
+        let newPost = {
+            name: nameInput.value.trim(),
+            text: textInput.value.trim(),
+            likes: 0,
+            timestamp: new Date().getTime()
+        };
+
+        if (colId === 3 && titleInput) {
+            newPost.title = titleInput.value.trim();
+        }
+
+        data[colId].unshift(newPost);
+        localStorage.setItem(storageKey, JSON.stringify(data));
+        
+        // تفريغ الحقول بعد النشر
+        textInput.value = '';
+        if (titleInput) titleInput.value = '';
+        
+        renderPosts();
+    }
+
+    function likePost(colId, index) {
+        data[colId][index].likes = (data[colId][index].likes || 0) + 1;
+        localStorage.setItem(storageKey, JSON.stringify(data));
+        renderPosts();
+    }
+
+    // التحميل الأولي للمشاركات
+    renderPosts();
+</script>
+
+</body>
+</html>
